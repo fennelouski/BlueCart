@@ -44,3 +44,17 @@ class APIKeys {
     /// "t"
     static let trendScore = "t"
 }
+
+enum apiSortOption {
+    case rating, trendScore
+
+    var key: String {
+        switch self {
+        case .rating:
+            return APIKeys.rating
+        case .trendScore:
+            return APIKeys.trendScore
+        }
+    }
+
+}
