@@ -19,6 +19,7 @@
 		80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8054404F200C0D130072ECDE /* PrivateConstants.swift */; };
 		80544052200C0D460072ECDE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544051200C0D460072ECDE /* Constants.swift */; };
 		80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544053200C0E9B0072ECDE /* APIKeys.swift */; };
+		80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C252200C11F000BBAB9A /* RecipeModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		8054404F200C0D130072ECDE /* PrivateConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
 		80544051200C0D460072ECDE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		80544053200C0E9B0072ECDE /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		80D2C252200C11F000BBAB9A /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		B246C57AFF5648A5B4C867E8 /* Pods_BlueRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -122,9 +124,8 @@
 			children = (
 				8054401E200C0C980072ECDE /* AppDelegate.swift */,
 				80544020200C0C980072ECDE /* ViewController.swift */,
-				80544051200C0D460072ECDE /* Constants.swift */,
-				80544053200C0E9B0072ECDE /* APIKeys.swift */,
-				8054404F200C0D130072ECDE /* PrivateConstants.swift */,
+				80D2C252200C11F000BBAB9A /* RecipeModel.swift */,
+				80D2C251200C11E300BBAB9A /* Constants */,
 				80544022200C0C980072ECDE /* Main.storyboard */,
 				80544028200C0C980072ECDE /* Assets.xcassets */,
 				8054402A200C0C980072ECDE /* LaunchScreen.storyboard */,
@@ -150,6 +151,16 @@
 				80544043200C0C980072ECDE /* Info.plist */,
 			);
 			path = BlueRecipesUITests;
+			sourceTree = "<group>";
+		};
+		80D2C251200C11E300BBAB9A /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				80544051200C0D460072ECDE /* Constants.swift */,
+				80544053200C0E9B0072ECDE /* APIKeys.swift */,
+				8054404F200C0D130072ECDE /* PrivateConstants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		92DB1B9EB1F8F23F9085F39D /* Pods */ = {
@@ -358,6 +369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */,
 				80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */,
 				80544052200C0D460072ECDE /* Constants.swift in Sources */,
 				80544021200C0C980072ECDE /* ViewController.swift in Sources */,
