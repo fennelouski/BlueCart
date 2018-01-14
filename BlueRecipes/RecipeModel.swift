@@ -10,6 +10,8 @@ import Foundation
 import Unbox
 
 class RecipeModel: Unboxable {
+    /// Recipe ID as returned by Search Query
+    let id: String?
     /// URL of the image
     let imageURLString: String
     /// URL of the image
@@ -40,6 +42,7 @@ class RecipeModel: Unboxable {
     let ingredients: [String]
 
     required init(unboxer: Unboxer) throws {
+        id = unboxer.unbox(key: APIKeys.recipeID)
         imageURLString = try unboxer.unbox(key: APIKeys.imageURL)
         sourceURLString = try unboxer.unbox(key: APIKeys.sourceURL)
         food2ForkURLString = try unboxer.unbox(key: APIKeys.food2ForkURL)
