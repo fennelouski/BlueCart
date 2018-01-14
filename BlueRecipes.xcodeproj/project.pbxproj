@@ -1,0 +1,580 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8054401E200C0C980072ECDE /* AppDelegate.swift */; };
+		80544021200C0C980072ECDE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544020200C0C980072ECDE /* ViewController.swift */; };
+		80544024200C0C980072ECDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80544022200C0C980072ECDE /* Main.storyboard */; };
+		80544027200C0C980072ECDE /* BlueRecipes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80544025200C0C980072ECDE /* BlueRecipes.xcdatamodeld */; };
+		80544029200C0C980072ECDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80544028200C0C980072ECDE /* Assets.xcassets */; };
+		8054402C200C0C980072ECDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8054402A200C0C980072ECDE /* LaunchScreen.storyboard */; };
+		80544037200C0C980072ECDE /* BlueRecipesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544036200C0C980072ECDE /* BlueRecipesTests.swift */; };
+		80544042200C0C980072ECDE /* BlueRecipesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544041200C0C980072ECDE /* BlueRecipesUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		80544033200C0C980072ECDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80544013200C0C980072ECDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8054401A200C0C980072ECDE;
+			remoteInfo = BlueRecipes;
+		};
+		8054403E200C0C980072ECDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80544013200C0C980072ECDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8054401A200C0C980072ECDE;
+			remoteInfo = BlueRecipes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8054401B200C0C980072ECDE /* BlueRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8054401E200C0C980072ECDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		80544020200C0C980072ECDE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		80544023200C0C980072ECDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		80544026200C0C980072ECDE /* BlueRecipes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlueRecipes.xcdatamodel; sourceTree = "<group>"; };
+		80544028200C0C980072ECDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8054402B200C0C980072ECDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8054402D200C0C980072ECDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80544032200C0C980072ECDE /* BlueRecipesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueRecipesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		80544036200C0C980072ECDE /* BlueRecipesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueRecipesTests.swift; sourceTree = "<group>"; };
+		80544038200C0C980072ECDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8054403D200C0C980072ECDE /* BlueRecipesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueRecipesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		80544041200C0C980072ECDE /* BlueRecipesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueRecipesUITests.swift; sourceTree = "<group>"; };
+		80544043200C0C980072ECDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		80544018200C0C980072ECDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8054402F200C0C980072ECDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8054403A200C0C980072ECDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		80544012200C0C980072ECDE = {
+			isa = PBXGroup;
+			children = (
+				8054401D200C0C980072ECDE /* BlueRecipes */,
+				80544035200C0C980072ECDE /* BlueRecipesTests */,
+				80544040200C0C980072ECDE /* BlueRecipesUITests */,
+				8054401C200C0C980072ECDE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8054401C200C0C980072ECDE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8054401B200C0C980072ECDE /* BlueRecipes.app */,
+				80544032200C0C980072ECDE /* BlueRecipesTests.xctest */,
+				8054403D200C0C980072ECDE /* BlueRecipesUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8054401D200C0C980072ECDE /* BlueRecipes */ = {
+			isa = PBXGroup;
+			children = (
+				8054401E200C0C980072ECDE /* AppDelegate.swift */,
+				80544020200C0C980072ECDE /* ViewController.swift */,
+				80544022200C0C980072ECDE /* Main.storyboard */,
+				80544028200C0C980072ECDE /* Assets.xcassets */,
+				8054402A200C0C980072ECDE /* LaunchScreen.storyboard */,
+				8054402D200C0C980072ECDE /* Info.plist */,
+				80544025200C0C980072ECDE /* BlueRecipes.xcdatamodeld */,
+			);
+			path = BlueRecipes;
+			sourceTree = "<group>";
+		};
+		80544035200C0C980072ECDE /* BlueRecipesTests */ = {
+			isa = PBXGroup;
+			children = (
+				80544036200C0C980072ECDE /* BlueRecipesTests.swift */,
+				80544038200C0C980072ECDE /* Info.plist */,
+			);
+			path = BlueRecipesTests;
+			sourceTree = "<group>";
+		};
+		80544040200C0C980072ECDE /* BlueRecipesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				80544041200C0C980072ECDE /* BlueRecipesUITests.swift */,
+				80544043200C0C980072ECDE /* Info.plist */,
+			);
+			path = BlueRecipesUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8054401A200C0C980072ECDE /* BlueRecipes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80544046200C0C980072ECDE /* Build configuration list for PBXNativeTarget "BlueRecipes" */;
+			buildPhases = (
+				80544017200C0C980072ECDE /* Sources */,
+				80544018200C0C980072ECDE /* Frameworks */,
+				80544019200C0C980072ECDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlueRecipes;
+			productName = BlueRecipes;
+			productReference = 8054401B200C0C980072ECDE /* BlueRecipes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		80544031200C0C980072ECDE /* BlueRecipesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80544049200C0C980072ECDE /* Build configuration list for PBXNativeTarget "BlueRecipesTests" */;
+			buildPhases = (
+				8054402E200C0C980072ECDE /* Sources */,
+				8054402F200C0C980072ECDE /* Frameworks */,
+				80544030200C0C980072ECDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				80544034200C0C980072ECDE /* PBXTargetDependency */,
+			);
+			name = BlueRecipesTests;
+			productName = BlueRecipesTests;
+			productReference = 80544032200C0C980072ECDE /* BlueRecipesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8054403C200C0C980072ECDE /* BlueRecipesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8054404C200C0C980072ECDE /* Build configuration list for PBXNativeTarget "BlueRecipesUITests" */;
+			buildPhases = (
+				80544039200C0C980072ECDE /* Sources */,
+				8054403A200C0C980072ECDE /* Frameworks */,
+				8054403B200C0C980072ECDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8054403F200C0C980072ECDE /* PBXTargetDependency */,
+			);
+			name = BlueRecipesUITests;
+			productName = BlueRecipesUITests;
+			productReference = 8054403D200C0C980072ECDE /* BlueRecipesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		80544013200C0C980072ECDE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Nathan Fennel";
+				TargetAttributes = {
+					8054401A200C0C980072ECDE = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					80544031200C0C980072ECDE = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8054401A200C0C980072ECDE;
+					};
+					8054403C200C0C980072ECDE = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8054401A200C0C980072ECDE;
+					};
+				};
+			};
+			buildConfigurationList = 80544016200C0C980072ECDE /* Build configuration list for PBXProject "BlueRecipes" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 80544012200C0C980072ECDE;
+			productRefGroup = 8054401C200C0C980072ECDE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8054401A200C0C980072ECDE /* BlueRecipes */,
+				80544031200C0C980072ECDE /* BlueRecipesTests */,
+				8054403C200C0C980072ECDE /* BlueRecipesUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		80544019200C0C980072ECDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8054402C200C0C980072ECDE /* LaunchScreen.storyboard in Resources */,
+				80544029200C0C980072ECDE /* Assets.xcassets in Resources */,
+				80544024200C0C980072ECDE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80544030200C0C980072ECDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8054403B200C0C980072ECDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		80544017200C0C980072ECDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80544021200C0C980072ECDE /* ViewController.swift in Sources */,
+				8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */,
+				80544027200C0C980072ECDE /* BlueRecipes.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8054402E200C0C980072ECDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80544037200C0C980072ECDE /* BlueRecipesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80544039200C0C980072ECDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80544042200C0C980072ECDE /* BlueRecipesUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		80544034200C0C980072ECDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8054401A200C0C980072ECDE /* BlueRecipes */;
+			targetProxy = 80544033200C0C980072ECDE /* PBXContainerItemProxy */;
+		};
+		8054403F200C0C980072ECDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8054401A200C0C980072ECDE /* BlueRecipes */;
+			targetProxy = 8054403E200C0C980072ECDE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		80544022200C0C980072ECDE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				80544023200C0C980072ECDE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8054402A200C0C980072ECDE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8054402B200C0C980072ECDE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		80544044200C0C980072ECDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		80544045200C0C980072ECDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		80544047200C0C980072ECDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EJLR2RPSV2;
+				INFOPLIST_FILE = BlueRecipes/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanfennel.BlueRecipes;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		80544048200C0C980072ECDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EJLR2RPSV2;
+				INFOPLIST_FILE = BlueRecipes/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanfennel.BlueRecipes;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8054404A200C0C980072ECDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EJLR2RPSV2;
+				INFOPLIST_FILE = BlueRecipesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanfennel.BlueRecipesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlueRecipes.app/BlueRecipes";
+			};
+			name = Debug;
+		};
+		8054404B200C0C980072ECDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EJLR2RPSV2;
+				INFOPLIST_FILE = BlueRecipesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanfennel.BlueRecipesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlueRecipes.app/BlueRecipes";
+			};
+			name = Release;
+		};
+		8054404D200C0C980072ECDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EJLR2RPSV2;
+				INFOPLIST_FILE = BlueRecipesUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanfennel.BlueRecipesUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BlueRecipes;
+			};
+			name = Debug;
+		};
+		8054404E200C0C980072ECDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EJLR2RPSV2;
+				INFOPLIST_FILE = BlueRecipesUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanfennel.BlueRecipesUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BlueRecipes;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		80544016200C0C980072ECDE /* Build configuration list for PBXProject "BlueRecipes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80544044200C0C980072ECDE /* Debug */,
+				80544045200C0C980072ECDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		80544046200C0C980072ECDE /* Build configuration list for PBXNativeTarget "BlueRecipes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80544047200C0C980072ECDE /* Debug */,
+				80544048200C0C980072ECDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		80544049200C0C980072ECDE /* Build configuration list for PBXNativeTarget "BlueRecipesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8054404A200C0C980072ECDE /* Debug */,
+				8054404B200C0C980072ECDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8054404C200C0C980072ECDE /* Build configuration list for PBXNativeTarget "BlueRecipesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8054404D200C0C980072ECDE /* Debug */,
+				8054404E200C0C980072ECDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		80544025200C0C980072ECDE /* BlueRecipes.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				80544026200C0C980072ECDE /* BlueRecipes.xcdatamodel */,
+			);
+			currentVersion = 80544026200C0C980072ECDE /* BlueRecipes.xcdatamodel */;
+			path = BlueRecipes.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 80544013200C0C980072ECDE /* Project object */;
+}
