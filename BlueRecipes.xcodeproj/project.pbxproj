@@ -25,6 +25,7 @@
 		80D2C257200C124000BBAB9A /* Pastel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25B200C124000BBAB9A /* Pastel.framework */; };
 		80D2C258200C124000BBAB9A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25C200C124000BBAB9A /* PureLayout.framework */; };
 		80D2C259200C124000BBAB9A /* Unbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25D200C124000BBAB9A /* Unbox.framework */; };
+		80D2C25F200C190500BBAB9A /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C25E200C190500BBAB9A /* ImageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		80D2C25B200C124000BBAB9A /* Pastel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pastel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80D2C25C200C124000BBAB9A /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80D2C25D200C124000BBAB9A /* Unbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Unbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80D2C25E200C190500BBAB9A /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		B246C57AFF5648A5B4C867E8 /* Pods_BlueRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -144,6 +146,7 @@
 				80544020200C0C980072ECDE /* ViewController.swift */,
 				80D2C252200C11F000BBAB9A /* RecipeModel.swift */,
 				80D2C254200C120700BBAB9A /* RecipeDataManager.swift */,
+				80D2C25E200C190500BBAB9A /* ImageManager.swift */,
 				80D2C251200C11E300BBAB9A /* Constants */,
 				80544022200C0C980072ECDE /* Main.storyboard */,
 				80544028200C0C980072ECDE /* Assets.xcassets */,
@@ -391,6 +394,7 @@
 				80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */,
 				80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */,
 				80544052200C0D460072ECDE /* Constants.swift in Sources */,
+				80D2C25F200C190500BBAB9A /* ImageManager.swift in Sources */,
 				80544021200C0C980072ECDE /* ViewController.swift in Sources */,
 				80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */,
 				8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */,
