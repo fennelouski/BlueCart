@@ -15,6 +15,8 @@
 		8054402C200C0C980072ECDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8054402A200C0C980072ECDE /* LaunchScreen.storyboard */; };
 		80544037200C0C980072ECDE /* BlueRecipesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544036200C0C980072ECDE /* BlueRecipesTests.swift */; };
 		80544042200C0C980072ECDE /* BlueRecipesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544041200C0C980072ECDE /* BlueRecipesUITests.swift */; };
+		80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8054404F200C0D130072ECDE /* PrivateConstants.swift */; };
+		80544052200C0D460072ECDE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544051200C0D460072ECDE /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		8054403D200C0C980072ECDE /* BlueRecipesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueRecipesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80544041200C0C980072ECDE /* BlueRecipesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueRecipesUITests.swift; sourceTree = "<group>"; };
 		80544043200C0C980072ECDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8054404F200C0D130072ECDE /* PrivateConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
+		80544051200C0D460072ECDE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 			children = (
 				8054401E200C0C980072ECDE /* AppDelegate.swift */,
 				80544020200C0C980072ECDE /* ViewController.swift */,
+				80544051200C0D460072ECDE /* Constants.swift */,
+				8054404F200C0D130072ECDE /* PrivateConstants.swift */,
 				80544022200C0C980072ECDE /* Main.storyboard */,
 				80544028200C0C980072ECDE /* Assets.xcassets */,
 				8054402A200C0C980072ECDE /* LaunchScreen.storyboard */,
@@ -262,7 +268,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80544052200C0D460072ECDE /* Constants.swift in Sources */,
 				80544021200C0C980072ECDE /* ViewController.swift in Sources */,
+				80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */,
 				8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */,
 				80544027200C0C980072ECDE /* BlueRecipes.xcdatamodeld in Sources */,
 			);
