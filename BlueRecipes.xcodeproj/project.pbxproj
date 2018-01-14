@@ -21,6 +21,10 @@
 		80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544053200C0E9B0072ECDE /* APIKeys.swift */; };
 		80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C252200C11F000BBAB9A /* RecipeModel.swift */; };
 		80D2C255200C120700BBAB9A /* RecipeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C254200C120700BBAB9A /* RecipeDataManager.swift */; };
+		80D2C256200C124000BBAB9A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25A200C124000BBAB9A /* Alamofire.framework */; };
+		80D2C257200C124000BBAB9A /* Pastel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25B200C124000BBAB9A /* Pastel.framework */; };
+		80D2C258200C124000BBAB9A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25C200C124000BBAB9A /* PureLayout.framework */; };
+		80D2C259200C124000BBAB9A /* Unbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25D200C124000BBAB9A /* Unbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +66,10 @@
 		80544053200C0E9B0072ECDE /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		80D2C252200C11F000BBAB9A /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		80D2C254200C120700BBAB9A /* RecipeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataManager.swift; sourceTree = "<group>"; };
+		80D2C25A200C124000BBAB9A /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80D2C25B200C124000BBAB9A /* Pastel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pastel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80D2C25C200C124000BBAB9A /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80D2C25D200C124000BBAB9A /* Unbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Unbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B246C57AFF5648A5B4C867E8 /* Pods_BlueRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -70,6 +78,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80D2C256200C124000BBAB9A /* Alamofire.framework in Frameworks */,
+				80D2C257200C124000BBAB9A /* Pastel.framework in Frameworks */,
+				80D2C258200C124000BBAB9A /* PureLayout.framework in Frameworks */,
+				80D2C259200C124000BBAB9A /* Unbox.framework in Frameworks */,
 				451CC44AD9F8BD9EF689553C /* Pods_BlueRecipes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +106,10 @@
 		09B5FD7796072FBBF8FFCEFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80D2C25A200C124000BBAB9A /* Alamofire.framework */,
+				80D2C25B200C124000BBAB9A /* Pastel.framework */,
+				80D2C25C200C124000BBAB9A /* PureLayout.framework */,
+				80D2C25D200C124000BBAB9A /* Unbox.framework */,
 				B246C57AFF5648A5B4C867E8 /* Pods_BlueRecipes.framework */,
 			);
 			name = Frameworks;
