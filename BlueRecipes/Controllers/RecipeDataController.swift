@@ -21,13 +21,13 @@ class RecipeDataController {
 
     init() {
         RecipeDataManager.getInitialRecipes {
-            self.recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
+            self.recipesOrderedSet = RecipeDataManager.recipesOrderedSet
         }
     }
 
     func loadMoreRecipes(completion: @escaping () -> Void) {
         func updateRecipes() {
-            recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
+            recipesOrderedSet = RecipeDataManager.recipesOrderedSet
             if sortingOption != .random {
                 updateSorting()
             }
@@ -69,13 +69,13 @@ extension RecipeDataController {
         filterRecipes(by: text)
 
         let partialCompletion: () -> Void = {
-            self.recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
+            self.recipesOrderedSet = RecipeDataManager.recipesOrderedSet
             self.filterRecipes(by: self.lastFilterString)
             partialCompletion()
         }
 
         let completion: () -> Void = {
-            self.recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
+            self.recipesOrderedSet = RecipeDataManager.recipesOrderedSet
             self.filterRecipes(by: self.lastFilterString)
             completion()
         }
@@ -95,7 +95,7 @@ extension RecipeDataController {
             return
         }
 
-        filteredRecipesArray = recipesOrderedSet.array as? [RecipeModel] ?? RecipeDataManager.recipesArray
+        filteredRecipesArray = recipesOrderedSet.array as? [RecipeModel] ?? RecipeDataManager.recipesOrderedSet.array as? [RecipeModel] ?? [RecipeModel]()
 
         RecipeDataController.filter(recipes: &filteredRecipesArray!, text: text)
         lastFilterString = text

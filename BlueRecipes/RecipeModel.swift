@@ -181,19 +181,23 @@ class RecipeModel: NSObject, Unboxable {
 
 
     static func == (lhs: RecipeModel, rhs: RecipeModel) -> Bool {
-        return lhs.id == rhs.id &&
-            lhs.title == rhs.title &&
-            lhs.publisher == rhs.publisher
+        return lhs.id == rhs.id
     }
 
     static func == (lhs: RecipeModel, rhs: Recipe) -> Bool {
-        return lhs.id == rhs.id &&
-            lhs.title == rhs.title &&
-            lhs.publisher == rhs.publisher
+        return lhs.id == rhs.id
     }
 
     static func == (lhs: Recipe, rhs: RecipeModel) -> Bool {
-        return rhs == lhs
+        return rhs.id == lhs.id
+    }
+
+    override var hash: Int {
+        return id.hash
+    }
+
+    override var hashValue: Int {
+        return id.hashValue
     }
 
 }

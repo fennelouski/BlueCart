@@ -87,15 +87,23 @@ class RecipeCollectionViewController: UICollectionViewController {
     func setupNavigationController() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
+        updateNavigationTitle()
         if filterActive {
             navigationItem.titleView = searchBar
             searchBar.becomeFirstResponder()
             navigationItem.setLeftBarButton(nil, animated: true)
             navigationItem.setRightBarButton(nil, animated: true)
         } else {
-            navigationItem.title = "BlueRecipes"
             navigationItem.leftBarButtonItem = sortButton
             navigationItem.rightBarButtonItem = searchButton
+        }
+    }
+
+    func updateNavigationTitle() {
+        if filterActive {
+            navigationItem.title = "\(recipeDataController.filteredRecipeCount(forSection: 0)) results"
+        } else {
+            navigationItem.title = "BlueRecipes"
         }
     }
 
@@ -218,6 +226,7 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
         navigationItem.titleView = searchBar
+        updateNavigationTitle()
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -242,11 +251,13 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
         let partialCompletion: () -> Void = {
             self.recipeDataController.filterRecipes(by: searchBar.text)
             self.collectionView?.reloadData()
+            self.updateNavigationTitle()
         }
 
         let completion: () -> Void = {
             self.recipeDataController.filterRecipes(by: searchBar.text)
             self.collectionView?.reloadData()
+            self.updateNavigationTitle()
         }
 
         recipeDataController.search(for: searchBar.text,
@@ -254,6 +265,8 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
                                     completion: completion)
 
         refreshControlAction(cancelSearch: false)
+        updateNavigationTitle()
+
     }
 
     func cancelSearching() {

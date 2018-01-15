@@ -12,12 +12,12 @@ import Unbox
 
 // Singleton that retrieves and stores recipes from CoreData & the Food2Fork API
 class RecipeDataManager {
-    private(set) public static var recipesArray = [RecipeModel]()
+    private(set) public static var recipesOrderedSet = NSMutableOrderedSet()
     private(set) public static var recipesDictionary = [String : RecipeModel]()
 
     static func getInitialRecipes(completion: @escaping () -> Void) {
         getAllRecipesFromPeristentStore()
-        if recipesArray.isEmpty {
+        if recipesOrderedSet.count == 0 {
             searchforItemsFromRemoteAPI(maxCount: 20) { (recipeModels) in
                 guard let recipeModels = recipeModels,
                     recipeModels.count > 0 else {
@@ -49,8 +49,15 @@ class RecipeDataManager {
                     print("It didn't work :(")
                     return
             }
-            save(recipes: recipeModels)
-            recipesArray.append(contentsOf: recipeModels)
+
+            var uniqueRecipes = [RecipeModel]()
+            for recipeModel in recipeModels {
+                if !recipesOrderedSet.contains(recipeModel) {
+                    uniqueRecipes.append(recipeModel)
+                }
+            }
+            recipesOrderedSet.addObjects(from: uniqueRecipes)
+            save(recipes: uniqueRecipes)
             completion()
         }
 
@@ -84,7 +91,7 @@ class RecipeDataManager {
                                                 for recipe in recipes {
                                                     if recipesDictionary[recipe.food2ForkURLString] != nil {
                                                         recipesDictionary[recipe.food2ForkURLString] = recipe
-                                                        recipesArray.insert(recipe, at: 0)
+                                                        recipesOrderedSet.add(recipe)
                                                         recipesToSave.append(recipe)
                                                     }
                                                 }
@@ -137,7 +144,7 @@ fileprivate extension RecipeDataManager {
             let recipes: [Recipe] = try context.fetch(Recipe.fetchRequest())
             for recipe in recipes {
                 let recipeModel = try RecipeModel(entity: recipe)
-                recipesArray.append(recipeModel)
+                recipesOrderedSet.add(recipeModel)
             }
         }
         catch {
