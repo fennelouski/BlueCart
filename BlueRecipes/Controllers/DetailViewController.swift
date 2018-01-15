@@ -9,6 +9,7 @@
 import UIKit
 import ParallaxHeader
 import PureLayout
+import SafariServices
 
 class DetailViewController: UIViewController, ImageUpdate {
     /// View that works to hold the scroll view inside the safe area using PureLayout
@@ -166,42 +167,32 @@ fileprivate extension DetailViewController {
 
 extension DetailViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return detailTableViewSection.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipeModel.ingredients?.count ?? 0
+        let section = detailTableViewSection(rawValue: section)
+        return section?.numberOfRows(with: recipeModel) ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) ?? UITableViewCell(frame: .zero)
 
-        guard let ingredients = recipeModel.ingredients,
-            indexPath.row < ingredients.count else {
-                return cell
-        }
-
         cell.backgroundColor = .clear
         cell.textLabel?.numberOfLines = 0
 
-        let ingredient = ingredients[indexPath.row]
-
-        let completed: Bool = {
-            if let isCompleted = recipeModel.completedIngredients[ingredient] {
-                return isCompleted
-            }
-
-            return false
-        }()
-
-        if completed {
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: ingredient)
-            attributeString.addAttribute(.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-            cell.textLabel?.attributedText = attributeString
-        } else {
-            cell.textLabel?.text = ingredient
+        guard let section = detailTableViewSection(rawValue: indexPath.section) else {
+            return cell
         }
 
+        let text = section.text(for: indexPath.row, recipeModel)
+        cell.textLabel?.text = text
+
+        if section.showStrikeThrough(for: indexPath.row, recipeModel) {
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
+            attributeString.addAttribute(.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+            cell.textLabel?.attributedText = attributeString
+        }
 
         return cell
     }
@@ -209,25 +200,20 @@ extension DetailViewController: UITableViewDataSource {
 
 extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let ingredients = recipeModel.ingredients,
-            indexPath.row < ingredients.count else {
-                return
+        guard let section = detailTableViewSection(rawValue: indexPath.section) else { return }
+
+        if section.useStrikeThrough {
+            section.updateIsCompleted(for: indexPath.row, recipeModel)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
         }
 
-        let ingredient = ingredients[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
 
-        let previousState: Bool = {
-            if let isCompleted = recipeModel.completedIngredients[ingredient] {
-                return isCompleted
-            }
+        guard let url = section.url(for: indexPath.row, recipeModel: recipeModel) else { return }
 
-            return false
-        }()
-
-        recipeModel.completedIngredients[ingredient] = !previousState
-
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true, completion: nil)
     }
 }
-
 
