@@ -111,7 +111,7 @@ class RecipeCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView .dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? RecipeCollectionViewCell ?? RecipeCollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? RecipeCollectionViewCell ?? RecipeCollectionViewCell()
 
         let recipe: RecipeModel = {
             if (filterActive) {
@@ -239,15 +239,19 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
 
         let partialCompletion: () -> Void = {
             self.collectionView?.reloadData()
+            print("this _should_ also do something \(self.recipeDataController.filteredRecipeCount(forSection: 0))")
         }
 
         let completion: () -> Void = {
             self.collectionView?.reloadData()
+            print("this _should_ do something \(self.recipeDataController.filteredRecipeCount(forSection: 0))")
         }
 
         recipeDataController.search(for: searchBar.text,
                                     partialCompletion: partialCompletion,
                                     completion: completion)
+
+        refreshControlAction(cancelSearch: false)
     }
 
     func cancelSearching() {
@@ -274,8 +278,10 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
 // MARK: Button Actions
 fileprivate extension RecipeCollectionViewController {
     @objc
-    func refreshControlAction() {
-        cancelSearching()
+    func refreshControlAction(cancelSearch: Bool = true) {
+        if cancelSearch {
+            cancelSearching()
+        }
 
         let delayTime = 2.0
         DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) {
@@ -306,7 +312,7 @@ fileprivate extension RecipeCollectionViewController {
         }
         alertController.addAction(alphabetically)
 
-        let byValue = UIAlertAction(title: "Ingredients, A-Z", style: .default) { (_) in
+        let byValue = UIAlertAction(title: "Ingredients by Quantity", style: .default) { (_) in
             self.recipeDataController.sortingOption = .byIngredients
             reloadAndScrollToTop()
         }

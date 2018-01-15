@@ -1,21 +1,24 @@
 PODS:
   - Alamofire (4.6.0)
+  - ParallaxHeader (2.0.0)
   - Pastel (0.3.0)
   - PureLayout (3.0.2)
   - Unbox (2.5.0)
 
 DEPENDENCIES:
   - Alamofire
+  - ParallaxHeader (~> 2.0.0)
   - Pastel
   - PureLayout
   - Unbox
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  ParallaxHeader: fb6ee97915626454f3c029a97b424f79a777c642
   Pastel: 738740c84f2b15bbcd96ebe99c4e6c2f5dd42262
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Unbox: 30e437e6151a6de16139375fd4e8dd9a664cfbf7
 
-PODFILE CHECKSUM: d04ac96c2299eee76af82d8b5fbeafa7e6c7d08d
+PODFILE CHECKSUM: 5c1b6445444119851f27b9dcd558041ef44963c4
 
 COCOAPODS: 1.3.1

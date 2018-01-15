@@ -77,6 +77,8 @@ class RecipeModel: NSObject, Unboxable {
     let socialRank: String?
     /// The ingredients of this recipe
     var ingredients: [String]?
+    /// Which steps the user has completed of the ingredients list
+    var completedIngredients = [String : Bool]()
 
     override init() {
         id = "invalid id"
@@ -250,7 +252,7 @@ fileprivate extension RecipeModel {
 
 fileprivate extension String {
     func cleaned() -> String {
-        return self.replacingOccurrences(of: "&#8217;", with: "'")
+        return self.replacingOccurrences(of: "&#8217;", with: "'").replacingOccurrences(of: "&amp;", with: "&")
     }
 
 }

@@ -76,6 +76,7 @@ extension RecipeDataController {
 
         let completion: () -> Void = {
             self.recipesArray = RecipeDataManager.recipesArray
+            self.filterRecipes(by: self.lastFilterString)
             completion()
         }
 
@@ -174,7 +175,7 @@ fileprivate extension RecipeDataController {
                 return recipe1.ingredients?.count ?? 0 < recipe2.ingredients?.count ?? 0
             case .byFavorites:
                 if recipe1.isFavorite == recipe2.isFavorite {
-                    return recipe1.title < recipe2.title
+                    return recipe1.id < recipe2.id
                 }
                 return recipe1.isFavorite
             }

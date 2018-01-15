@@ -25,6 +25,8 @@ class Constants {
     static let baseSearchURLString = "http://food2fork.com/api/search"
     /// "http://food2fork.com/api/search" as! URL
     static let baseSearchURL = URL(string: baseSearchURLString)!
+    /// "cell identifier"
+    static let cellIdentifier = "cell identifier"
     /// 6.0
     static let defaultInset: CGFloat = 6
     /// 0.5

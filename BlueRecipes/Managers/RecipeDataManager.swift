@@ -222,12 +222,6 @@ fileprivate extension RecipeDataManager {
                     return
                 }
 
-//                if let value = response.result.value {
-//                    print("\(value)")
-//                } else {
-//                    print("\(response)")
-//                }
-
                 guard let value = response.result.value as? [String: Any],
                     let recipesJSON = value[APIKeys.recipes] as? [[String: Any]] else {
                     print("Malformed data received from \(Constants.serviceName) service while searching")

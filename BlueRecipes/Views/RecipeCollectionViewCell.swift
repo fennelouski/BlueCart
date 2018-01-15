@@ -11,7 +11,7 @@ import PureLayout
 
 class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
     fileprivate let titleLabel = UILabel(frame: .zero)
-    fileprivate let ingredientsLabel = UILabel(frame: .zero)
+    fileprivate let publisherLabel = UILabel(frame: .zero)
     fileprivate let imageBackground = UIView(frame: .zero)
     fileprivate let imageView = UIImageView(frame: .zero)
     fileprivate lazy var favoriteButton: DOFavoriteButton = {
@@ -30,14 +30,23 @@ class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
     override func layoutSubviews() {
         layoutImage()
         layoutLabels()
+        updateLabels()
         layoutFavoriteButton()
     }
 
     fileprivate func updateView(animated: Bool = false) {
-        titleLabel.text = recipeModel.title
-        ingredientsLabel.text = recipeModel.ingredients?.joined(separator: ", ") ?? recipeModel.publisher ?? recipeModel.socialRank
+        updateLabels()
         updateFavoriteButton(animated: animated)
         updateImage()
+    }
+
+    fileprivate func updateLabels() {
+        titleLabel.text = recipeModel.title
+        if recipeModel.title.height(withConstrainedWidth: titleLabel.bounds.width, font: titleLabel.font) > 24 {
+            publisherLabel.text = nil
+        } else {
+            publisherLabel.text = recipeModel.publisher
+        }
     }
 
     func updateImage() {
@@ -98,14 +107,21 @@ class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
         }
 
         contentView.addSubview(titleLabel)
+        let titleLabelPointSize = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .headline).pointSize
+        titleLabel.font = UIFont.boldSystemFont(ofSize: titleLabelPointSize)
         titleLabel.autoPinEdge(toSuperviewEdge: .leading)
         titleLabel.autoPinEdge(toSuperviewEdge: .trailing)
         titleLabel.autoPinEdge(.top, to: .bottom, of: imageBackground, withOffset: RecipeCollectionViewLayout.titleLabelImageOffset)
+        titleLabel.numberOfLines = 2
 
-        contentView.addSubview(ingredientsLabel)
-        ingredientsLabel.autoPinEdge(toSuperviewEdge: .leading)
-        ingredientsLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        ingredientsLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: RecipeCollectionViewLayout.ingredientsLabelTitleLabelOffset)
+        contentView.addSubview(publisherLabel)
+        publisherLabel.autoPinEdge(toSuperviewEdge: .leading)
+        publisherLabel.autoPinEdge(toSuperviewEdge: .trailing)
+        publisherLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: RecipeCollectionViewLayout.ingredientsLabelTitleLabelOffset)
+        let publisherLabelPointSize = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .footnote).pointSize
+        publisherLabel.font = UIFont.systemFont(ofSize: publisherLabelPointSize)
+        publisherLabel.textColor = UIColor.gray
+        publisherLabel.textAlignment = .right
     }
 
     fileprivate func layoutFavoriteButton() {
@@ -120,4 +136,21 @@ class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
         updateFavoriteButton(animated: true)
     }
 }
+
+extension String {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+
+        return ceil(boundingBox.height)
+    }
+
+    func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+
+        return ceil(boundingBox.width)
+    }
+}
+
 

@@ -7,6 +7,7 @@ target 'BlueRecipes' do
     use_frameworks!
     `$(inherited)`
     pod ‘Alamofire’
+    pod 'ParallaxHeader', '~> 2.0.0'
     pod 'Pastel'
     pod 'PureLayout'
     pod 'Unbox'
