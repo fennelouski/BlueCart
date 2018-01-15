@@ -256,7 +256,7 @@ fileprivate extension RecipeDataManager {
             Constants.baseRecipeRequestURL,
             method: .get,
             parameters: [APIKeys.key: PrivateConstants.apiKey,
-                         APIKeys.recipeID : recipeID])
+                         APIKeys.rId : recipeID])
             .validate()
             .responseJSON { (response) -> Void in
                 guard response.result.isSuccess else {
@@ -269,19 +269,21 @@ fileprivate extension RecipeDataManager {
                     return
                 }
 
-                guard let value = response.result.value as? [[String: Any]] else {
+                guard let value = response.result.value as? [String: Any] else {
                     print("Malformed data received from \(Constants.serviceName) service while receiving recipe")
                     completion(nil)
                     return
                 }
 
-                do {
-                    let recipes = try value.flatMap({ (recipeDictionary) -> RecipeModel? in
-                        let recipe: RecipeModel = try unbox(dictionary: recipeDictionary)
-                        return recipe
-                    })
+                guard let recipeDictionary = value[APIKeys.recipe] as? [String: Any] else {
+                    print("Malformed data received from \(Constants.serviceName) service while receiving recipe \(value.keys) expecting \(APIKeys.recipe)")
+                    completion(nil)
+                    return
+                }
 
-                    completion(recipes)
+                do {
+                    let recipe: RecipeModel = try unbox(dictionary: recipeDictionary)
+                    completion([recipe])
                 } catch {
                     print("An error occurred while parsing: \(error)")
                     completion(nil)
