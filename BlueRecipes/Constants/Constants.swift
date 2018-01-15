@@ -13,6 +13,10 @@ class Constants {
     static let apiConcatenationSeparator = ","
     /// CharacterSet containing contents of apiConcatenationSeparator
     static let apiConcatenationSeparatorSet = CharacterSet(charactersIn: apiConcatenationSeparator)
+    /// 0.3
+    static let animationDuration: TimeInterval = 0.3
+    /// 2.0
+    static let backgroundAnimationDuration: TimeInterval = 2.0
     /// "http://food2fork.com/api/get"
     static let baseRecipeRequestURLString = "http://food2fork.com/api/get"
     /// "http://food2fork.com/api/get" as! URL
@@ -21,10 +25,14 @@ class Constants {
     static let baseSearchURLString = "http://food2fork.com/api/search"
     /// "http://food2fork.com/api/search" as! URL
     static let baseSearchURL = URL(string: baseSearchURLString)!
+    /// 6.0
+    static let defaultImageInset: CGFloat = 6
     /// 0.5
     static let jpegCompressionAmount: CGFloat = 0.5
     /// 30
     static let maxRecipeRequestCount: Int = 30
+    /// 6.0
+    static let parallaxIntensity: CGFloat = 6
     /// "Food2Fork"
     static let serviceName = "Food2Fork"
 }

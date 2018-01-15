@@ -16,7 +16,7 @@ class RecipeDataManager {
     static func getInitialRecipes(completion: @escaping () -> Void) {
         getRecipesFromPeristentStore()
         if recipesArray.isEmpty {
-            searchForRecipesFromAPI(maxCount: 20) { (recipeModels) in
+            searchforItemsFromAPI(maxCount: 20) { (recipeModels) in
 
                 guard let recipeModels = recipeModels,
                     recipeModels.count > 0 else {
@@ -70,7 +70,7 @@ fileprivate extension RecipeDataManager {
 }
 
 fileprivate extension RecipeDataManager {
-    static func searchForRecipesFromAPI(maxCount: Int? = Constants.maxRecipeRequestCount,
+    static func searchforItemsFromAPI(maxCount: Int? = Constants.maxRecipeRequestCount,
                                  searchTerms: [String]? = nil,
                                  sortOption: apiSortOption? = nil,
                                  pageNumber: Int? = nil,

@@ -13,6 +13,12 @@ import Unbox
 class RecipeModel: NSObject, Unboxable {
     /// Recipe ID as returned by Search Query
     let id: String?
+    /// Whether or not the user has favorited this recipe
+    var isFavorite: Bool = false {
+        didSet {
+            saveFavorite()
+        }
+    }
     /// URL of the image
     let imageURLString: String?
     /// URL of the image
@@ -44,10 +50,47 @@ class RecipeModel: NSObject, Unboxable {
         guard let publisherURLString = publisherURLString else { return nil }
         return URL(string: publisherURLString)
     }()
+    /// All text that can be searched in lowercased format
+    lazy var searchableText: String = {
+        var searchableText = ""
+        if let id = id {
+            searchableText += "\nid: \(id)"
+        }
+        if let sourceURLString = sourceURLString {
+            searchableText += "\nsourceURLString: \(sourceURLString)"
+        }
+        searchableText += "\nfood2ForkURLString: \(food2ForkURLString)"
+
+        searchableText += "\ntitle: \(title)"
+
+        searchableText += "\npublisher: \(publisher)"
+
+        if let publisherURLString = publisherURLString {
+            searchableText += "\npublisherURLString: \(publisherURLString)"
+        }
+
+        if let ingredients = ingredients {
+            searchableText += "\ningredients: \(ingredients.joined(separator: " "))"
+        }
+
+        return searchableText.lowercased()
+    }()
     /// The Social Ranking of the Recipe (As determined by the Food2Fork.com Ranking Algorithm)
     let socialRank: String?
     /// The ingredients of this recipe
     let ingredients: [String]?
+
+    override init() {
+        id = "invalid id"
+        imageURLString = nil
+        sourceURLString = nil
+        food2ForkURLString = "Food2Fork.com"
+        title = "no title"
+        publisher = "no publisher"
+        publisherURLString = nil
+        socialRank = nil
+        ingredients = nil
+    }
 
     required init(unboxer: Unboxer) throws {
         id = unboxer.unbox(key: APIKeys.recipeID)
@@ -60,7 +103,6 @@ class RecipeModel: NSObject, Unboxable {
         socialRank = unboxer.unbox(key: APIKeys.socialRank)
         ingredients = unboxer.unbox(key: APIKeys.ingredients)
     }
-
     
     init(entity: Recipe) throws {
         imageURLString = entity.imageURLString
@@ -70,6 +112,7 @@ class RecipeModel: NSObject, Unboxable {
         
         publisherURLString = entity.publisherURLString
         socialRank = entity.socialRank
+        isFavorite = entity.isFavorite
         guard let food2ForkURLString = entity.food2ForkURLString,
             let title = entity.title,
             let publisher = entity.publisher else {
@@ -101,10 +144,13 @@ class RecipeModel: NSObject, Unboxable {
         if let publisherURLString = publisherURLString {
             compositeDescription += "\npublisherURLString: \(publisherURLString)"
         }
-        compositeDescription += "\nsocialRank: \(socialRank)"
+        if let socialRank = socialRank {
+            compositeDescription += "\n: \(socialRank)"
+        }
         if let ingredients = ingredients {
             compositeDescription += "\ningredients: \(ingredients)"
         }
+        compositeDescription += "\nisFavorite: \(isFavorite ? "true" : "false")"
 
         return compositeDescription
     }
@@ -158,3 +204,21 @@ extension Recipe {
 
     }
 }
+
+fileprivate extension RecipeModel {
+    func saveFavorite() {
+        UserDefaults.standard.set(isFavorite, forKey: idKey)
+    }
+
+    func loadFavorite() {
+        guard let isFavorite = UserDefaults.standard.value(forKey: idKey) as? Bool else {
+            return
+        }
+        self.isFavorite = isFavorite
+    }
+
+    fileprivate var idKey: String {
+        return "ItemModelKey\(food2ForkURLString)"
+    }
+}
+

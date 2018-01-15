@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		451CC44AD9F8BD9EF689553C /* Pods_BlueRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B246C57AFF5648A5B4C867E8 /* Pods_BlueRecipes.framework */; };
 		8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8054401E200C0C980072ECDE /* AppDelegate.swift */; };
-		80544024200C0C980072ECDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80544022200C0C980072ECDE /* Main.storyboard */; };
 		80544027200C0C980072ECDE /* BlueRecipes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80544025200C0C980072ECDE /* BlueRecipes.xcdatamodeld */; };
 		80544029200C0C980072ECDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80544028200C0C980072ECDE /* Assets.xcassets */; };
 		8054402C200C0C980072ECDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8054402A200C0C980072ECDE /* LaunchScreen.storyboard */; };
@@ -63,7 +62,6 @@
 		39DF267864675F8880826B42 /* Pods-BlueRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueRecipes.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlueRecipes/Pods-BlueRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		8054401B200C0C980072ECDE /* BlueRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8054401E200C0C980072ECDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		80544023200C0C980072ECDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		80544026200C0C980072ECDE /* BlueRecipes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlueRecipes.xcdatamodel; sourceTree = "<group>"; };
 		80544028200C0C980072ECDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8054402B200C0C980072ECDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 				80A4DEDD200C451500BFDCE9 /* Auxilliary Views */,
 				80A4DED0200C414900BFDCE9 /* Extensions */,
 				80D2C251200C11E300BBAB9A /* Constants */,
-				80544022200C0C980072ECDE /* Main.storyboard */,
 				80544028200C0C980072ECDE /* Assets.xcassets */,
 				8054402A200C0C980072ECDE /* LaunchScreen.storyboard */,
 				8054402D200C0C980072ECDE /* Info.plist */,
@@ -361,7 +358,6 @@
 			files = (
 				8054402C200C0C980072ECDE /* LaunchScreen.storyboard in Resources */,
 				80544029200C0C980072ECDE /* Assets.xcassets in Resources */,
-				80544024200C0C980072ECDE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,14 +499,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		80544022200C0C980072ECDE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				80544023200C0C980072ECDE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8054402A200C0C980072ECDE /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

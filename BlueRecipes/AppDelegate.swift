@@ -16,10 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        RecipeDataManager.getInitialRecipes {
-            print("Recipes recieved! \(RecipeDataManager.recipesArray)")
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        guard let window = window else {
+            return false
         }
+        let navigationController = UINavigationController(rootViewController: RecipeCollectionViewController())
+        navigationController.navigationBar.prefersLargeTitles = true
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+
         return true
     }
 

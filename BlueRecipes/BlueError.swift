@@ -8,7 +8,8 @@
 
 import Foundation
 
-
+// TODO: Add an error enum
+// ...then I have all the types
 
 protocol CodeBlue: LocalizedError {
     var title: String? { get }
