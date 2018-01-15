@@ -30,7 +30,7 @@ class APIKeys {
     /// "r"
     static let rating = "r"
     /// "rId"
-    static let recipeID = "rId"
+    static let recipeID = "recipe_id"
     /// "recipes"
     static let recipes = "recipes"
     /// "social_rank"

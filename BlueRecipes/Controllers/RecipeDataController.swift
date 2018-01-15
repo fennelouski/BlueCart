@@ -30,8 +30,13 @@ class RecipeDataController {
             recipesArray = RecipeDataManager.recipesArray
             completion()
         }
+
         RecipeDataManager.loadMoreRecipes(partialCompletion: updateRecipes,
-                                          completion: completion)
+                                          completion: updateRecipes)
+    }
+
+    func getRecipeDetails(for recipeModel: RecipeModel, completion: @escaping (RecipeModel) -> Void) {
+        RecipeDataManager.getDetails(for: recipeModel, completion: completion)
     }
 
     func sectionCount() -> Int {

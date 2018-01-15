@@ -68,7 +68,6 @@ class RecipeCollectionViewController: UICollectionViewController {
 
         recipeDataController.loadMoreRecipes {
             self.collectionView?.reloadData()
-            print("Recipes have loaded!")
         }
     }
 
@@ -146,6 +145,12 @@ class RecipeCollectionViewController: UICollectionViewController {
 
         detailViewController.recipeModel = recipeModel
         navigationController?.pushViewController(detailViewController, animated: true)
+
+        if recipeModel.ingredients == nil {
+            recipeDataController.getRecipeDetails(for: recipeModel, completion: { (recipe) in
+                self.detailViewController.recipeModel = recipe
+            })
+        }
     }
 
     fileprivate func enableVisibleFavoriteButtons() {
@@ -277,6 +282,10 @@ fileprivate extension RecipeCollectionViewController {
             // stop refreshing after 2 seconds
             self.collectionView?.reloadData()
             self.refreshControl.endRefreshing()
+        }
+
+        recipeDataController.loadMoreRecipes {
+            self.collectionView?.reloadData()
         }
     }
 

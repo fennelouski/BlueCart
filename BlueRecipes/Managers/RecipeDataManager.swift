@@ -33,18 +33,15 @@ class RecipeDataManager {
     }
 
     /**
-     Adds the imageURL to the running queue if needed.
-     If the imageURL is already in the queue, nothing changes.
+     Gets more recipes from the API.
 
-     - Parameter searchTerms: The words that will be used to search the API
-     - Parameter pageNumber: The page number that is being returned (To keep track of concurrent requests)
-     - Parameter enforceMaximum: Whether or not to recognize the maximum number of pages to search through
      - Parameter partialCompletion: Executed at the very end of all paged results
      - Parameter completion: Executed at the very end of all paged results
      */
     static func loadMoreRecipes(partialCompletion: @escaping () -> Void,
                                 completion: @escaping () -> Void) {
         let lastPage: Int = UserDefaults.standard.integer(forKey: Constants.lastPageKey) + 1
+        UserDefaults.standard.set(lastPage, forKey: Constants.lastPageKey)
 
         let partialCompletion: ([RecipeModel]?) -> Void = { (recipeModels) in
             guard let recipeModels = recipeModels,
@@ -62,8 +59,7 @@ class RecipeDataManager {
     }
 
     /**
-     Adds the imageURL to the running queue if needed.
-     If the imageURL is already in the queue, nothing changes.
+     Recursively creates requests for searching the api for the provided information.
 
      - Parameter searchTerms: The words that will be used to search the API
      - Parameter pageNumber: The page number that is being returned (To keep track of concurrent requests)
@@ -87,7 +83,7 @@ class RecipeDataManager {
                                         for recipe in recipes {
                                             if recipesDictionary[recipe.food2ForkURLString] != nil {
                                                 recipesDictionary[recipe.food2ForkURLString] = recipe
-                                                recipesArray.append(recipe)
+                                                recipesArray.insert(recipe, at: 0)
                                                 recipesToSave.append(recipe)
                                             }
                                         }
@@ -103,7 +99,26 @@ class RecipeDataManager {
             })
         } else {
             completion()
-            print("recipes count: \(recipesArray.count)")
+        }
+    }
+
+    /**
+     Gets details for a single recipe from the API.
+
+     - Parameter recipe: Recipe which details will be retrieved for
+     - Parameter completion: Executed after receiving recipe details
+     */
+    static func getDetails(for recipe: RecipeModel, completion: @escaping (RecipeModel) -> Void) {
+        getRecipesFromAPI(recipeID: recipe.id) { (recipes) in
+            guard let recipes = recipes else { return }
+            save(recipes: recipes)
+            for updatedRecipe in recipes {
+                if updatedRecipe.id == recipe.id {
+                    recipe.ingredients = updatedRecipe.ingredients
+                    completion(recipe)
+                    return
+                }
+            }
         }
     }
 }
@@ -136,12 +151,40 @@ fileprivate extension RecipeDataManager {
 
         let context = appDelegate.persistentContainer.viewContext
 
+        var duplicates = [String : RecipeModel]()
+
         for recipeModel in recipes {
-            let _ = recipeModel.recipeEntity(from: context)
+            if recipesDictionary[recipeModel.food2ForkURLString] == nil {
+                let _ = recipeModel.recipeEntity(from: context)
+                recipesDictionary[recipeModel.food2ForkURLString] = recipeModel
+            } else {
+                duplicates[recipeModel.id] = recipeModel
+            }
+        }
+
+        if !duplicates.isEmpty {
+            let optionalFetchedRecipes: [Recipe]? = {
+                do {
+                    return try context.fetch(Recipe.fetchRequest())
+                }
+                catch {
+                    print("Fetching Failed \(error)")
+                    return nil
+                }
+            }()
+
+            guard let fetchedRecipes = optionalFetchedRecipes else { return }
+
+            for fetchedRecipe in fetchedRecipes {
+                guard let fetchedID = fetchedRecipe.id else { continue }
+                if duplicates.keys.contains(fetchedID) {
+                    guard let duplicate = duplicates[fetchedID] else { continue }
+                    duplicate.update(to: fetchedRecipe)
+                }
+            }
         }
 
         appDelegate.saveContext()
-
     }
 }
 
@@ -179,11 +222,11 @@ fileprivate extension RecipeDataManager {
                     return
                 }
 
-                if let value = response.result.value {
-                    print("\(value)")
-                } else {
-                    print("\(response)")
-                }
+//                if let value = response.result.value {
+//                    print("\(value)")
+//                } else {
+//                    print("\(response)")
+//                }
 
                 guard let value = response.result.value as? [String: Any],
                     let recipesJSON = value[APIKeys.recipes] as? [[String: Any]] else {

@@ -12,7 +12,7 @@ import Unbox
 
 class RecipeModel: NSObject, Unboxable {
     /// Recipe ID as returned by Search Query
-    let id: String?
+    let id: String
     /// Whether or not the user has favorited this recipe
     var isFavorite: Bool = false {
         didSet {
@@ -53,9 +53,7 @@ class RecipeModel: NSObject, Unboxable {
     /// All text that can be searched in lowercased format
     lazy var searchableText: String = {
         var searchableText = ""
-        if let id = id {
-            searchableText += "\nid: \(id)"
-        }
+        searchableText += "\nid: \(id)"
         if let sourceURLString = sourceURLString {
             searchableText += "\nsourceURLString: \(sourceURLString)"
         }
@@ -78,7 +76,7 @@ class RecipeModel: NSObject, Unboxable {
     /// The Social Ranking of the Recipe (As determined by the Food2Fork.com Ranking Algorithm)
     let socialRank: String?
     /// The ingredients of this recipe
-    let ingredients: [String]?
+    var ingredients: [String]?
 
     override init() {
         id = "invalid id"
@@ -93,7 +91,7 @@ class RecipeModel: NSObject, Unboxable {
     }
 
     required init(unboxer: Unboxer) throws {
-        id = unboxer.unbox(key: APIKeys.recipeID)
+        id = try unboxer.unbox(key: APIKeys.recipeID)
         imageURLString = unboxer.unbox(key: APIKeys.imageURL)
         sourceURLString = unboxer.unbox(key: APIKeys.sourceURL)
         food2ForkURLString = try unboxer.unbox(key: APIKeys.food2ForkURL)
@@ -107,12 +105,12 @@ class RecipeModel: NSObject, Unboxable {
     init(entity: Recipe) throws {
         imageURLString = entity.imageURLString
         sourceURLString = entity.sourceURLString
-        id = entity.id
         ingredients = entity.ingredients?.components(separatedBy: Constants.apiConcatenationSeparatorSet)
         publisherURLString = entity.publisherURLString
         socialRank = entity.socialRank
         isFavorite = entity.isFavorite
         guard let food2ForkURLString = entity.food2ForkURLString,
+            let id = entity.id,
             let title = entity.title,
             let publisher = entity.publisher else {
                 print("\(entity.description)")
@@ -121,6 +119,7 @@ class RecipeModel: NSObject, Unboxable {
                                       code: BlueRecipeErrorCode.missingInitializationProperty)
         }
         self.food2ForkURLString = food2ForkURLString
+        self.id = id
         self.title = title
         self.publisher = publisher
         super.init()
@@ -128,9 +127,7 @@ class RecipeModel: NSObject, Unboxable {
 
     override var description: String {
         var compositeDescription = super.description
-        if let id = id {
-            compositeDescription += "\nid: \(id)"
-        }
+        compositeDescription += "\nid: \(id)"
         if let imageURLString = imageURLString {
             compositeDescription += "\nimageURLString: \(imageURLString)"
         }
@@ -144,7 +141,7 @@ class RecipeModel: NSObject, Unboxable {
             compositeDescription += "\npublisherURLString: \(publisherURLString)"
         }
         if let socialRank = socialRank {
-            compositeDescription += "\n: \(socialRank)"
+            compositeDescription += "\nsocialRank: \(socialRank)"
         }
         if let ingredients = ingredients {
             compositeDescription += "\ningredients: \(ingredients)"
@@ -167,12 +164,35 @@ class RecipeModel: NSObject, Unboxable {
         return recipe
     }
 
+    func update(to recipe: Recipe) {
+        recipe.id = id
+        recipe.ingredients = ingredients?.joined(separator: Constants.apiConcatenationSeparator)
+        recipe.imageURLString = imageURLString
+        recipe.sourceURLString = sourceURLString
+        recipe.food2ForkURLString = food2ForkURLString
+        recipe.title = title
+        recipe.publisher = publisher
+    }
+
+
     static func == (lhs: RecipeModel, rhs: RecipeModel) -> Bool {
         return lhs.id == rhs.id &&
             lhs.title == rhs.title &&
             lhs.imageURLString == rhs.imageURLString &&
-            lhs.food2ForkURL == rhs.food2ForkURL
+            lhs.food2ForkURLString == rhs.food2ForkURLString
     }
+
+    static func == (lhs: RecipeModel, rhs: Recipe) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.title == rhs.title &&
+            lhs.imageURLString == rhs.imageURLString &&
+            lhs.food2ForkURLString == rhs.food2ForkURLString
+    }
+
+    static func == (lhs: Recipe, rhs: RecipeModel) -> Bool {
+        return rhs == lhs
+    }
+
 }
 
 extension Recipe {
@@ -194,13 +214,13 @@ extension Recipe {
             compositeDescription += "\ntitle: \(title)"
         }
         if let publisher = publisher {
-            compositeDescription += "\n: \(publisher)"
+            compositeDescription += "\npublisher: \(publisher)"
         }
         if let publisherURLString = publisherURLString {
-            compositeDescription += "\n: \(publisherURLString)"
+            compositeDescription += "\npublisherURLString: \(publisherURLString)"
         }
         if let socialRank = socialRank {
-            compositeDescription += "\n: \(socialRank)"
+            compositeDescription += "\nsocialRank: \(socialRank)"
         }
         if let ingredients = ingredients {
             compositeDescription += "\ningredients: \(ingredients)"
