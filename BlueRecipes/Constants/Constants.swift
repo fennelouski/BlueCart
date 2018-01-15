@@ -11,6 +11,8 @@ import Foundation
 class Constants {
     /// ","
     static let apiConcatenationSeparator = ","
+    /// CharacterSet containing contents of apiConcatenationSeparator
+    static let apiConcatenationSeparatorSet = CharacterSet(charactersIn: apiConcatenationSeparator)
     /// "http://food2fork.com/api/get"
     static let baseRecipeRequestURLString = "http://food2fork.com/api/get"
     /// "http://food2fork.com/api/get" as! URL

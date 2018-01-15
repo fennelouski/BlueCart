@@ -19,6 +19,7 @@
 		80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8054404F200C0D130072ECDE /* PrivateConstants.swift */; };
 		80544052200C0D460072ECDE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544051200C0D460072ECDE /* Constants.swift */; };
 		80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544053200C0E9B0072ECDE /* APIKeys.swift */; };
+		80A4DEC7200C38B000BFDCE9 /* BlueError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DEC6200C38B000BFDCE9 /* BlueError.swift */; };
 		80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C252200C11F000BBAB9A /* RecipeModel.swift */; };
 		80D2C255200C120700BBAB9A /* RecipeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C254200C120700BBAB9A /* RecipeDataManager.swift */; };
 		80D2C256200C124000BBAB9A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25A200C124000BBAB9A /* Alamofire.framework */; };
@@ -65,6 +66,7 @@
 		8054404F200C0D130072ECDE /* PrivateConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
 		80544051200C0D460072ECDE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		80544053200C0E9B0072ECDE /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		80A4DEC6200C38B000BFDCE9 /* BlueError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueError.swift; sourceTree = "<group>"; };
 		80D2C252200C11F000BBAB9A /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		80D2C254200C120700BBAB9A /* RecipeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataManager.swift; sourceTree = "<group>"; };
 		80D2C25A200C124000BBAB9A /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +149,7 @@
 				80D2C252200C11F000BBAB9A /* RecipeModel.swift */,
 				80D2C254200C120700BBAB9A /* RecipeDataManager.swift */,
 				80D2C25E200C190500BBAB9A /* ImageManager.swift */,
+				80A4DEC6200C38B000BFDCE9 /* BlueError.swift */,
 				80D2C251200C11E300BBAB9A /* Constants */,
 				80544022200C0C980072ECDE /* Main.storyboard */,
 				80544028200C0C980072ECDE /* Assets.xcassets */,
@@ -395,6 +398,7 @@
 				80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */,
 				80544052200C0D460072ECDE /* Constants.swift in Sources */,
 				80D2C25F200C190500BBAB9A /* ImageManager.swift in Sources */,
+				80A4DEC7200C38B000BFDCE9 /* BlueError.swift in Sources */,
 				80544021200C0C980072ECDE /* ViewController.swift in Sources */,
 				80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */,
 				8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */,
