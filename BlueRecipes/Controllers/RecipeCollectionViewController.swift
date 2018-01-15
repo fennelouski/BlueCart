@@ -56,7 +56,7 @@ class RecipeCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         prepareUI()
 
-        enableVisibleFavoriteButtons() // If the user favorited an recipe on the detail page
+        enableVisibleFavoriteButtons() // If the user favorited a recipe on the detail page
 
         if recipeDataController.sortingOption == .byFavorites {
             // If the user changed the favorite status on the detail page then the order needs to be updated
@@ -69,6 +69,8 @@ class RecipeCollectionViewController: UICollectionViewController {
         recipeDataController.loadMoreRecipes {
             self.collectionView?.reloadData()
         }
+
+        self.refreshControl.endRefreshing()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -238,13 +240,13 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
         view.endEditing(true)
 
         let partialCompletion: () -> Void = {
+            self.recipeDataController.filterRecipes(by: searchBar.text)
             self.collectionView?.reloadData()
-            print("this _should_ also do something \(self.recipeDataController.filteredRecipeCount(forSection: 0))")
         }
 
         let completion: () -> Void = {
+            self.recipeDataController.filterRecipes(by: searchBar.text)
             self.collectionView?.reloadData()
-            print("this _should_ do something \(self.recipeDataController.filteredRecipeCount(forSection: 0))")
         }
 
         recipeDataController.search(for: searchBar.text,

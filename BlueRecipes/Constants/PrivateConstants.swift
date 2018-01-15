@@ -9,6 +9,6 @@
 import Foundation
 
 class PrivateConstants {
-    /// 88096747e479919f373ac421939b8477
-    static let apiKey = "88096747e479919f373ac421939b8477"
+    /// fd747c45679f7480df20110a4907a1f8
+    static let apiKey = "fd747c45679f7480df20110a4907a1f8"
 }

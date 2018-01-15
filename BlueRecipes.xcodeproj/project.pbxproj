@@ -39,6 +39,7 @@
 		80D2C259200C124000BBAB9A /* Unbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25D200C124000BBAB9A /* Unbox.framework */; };
 		80D2C25F200C190500BBAB9A /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C25E200C190500BBAB9A /* ImageManager.swift */; };
 		80EFFF64200C94B800121C64 /* ImageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EFFF63200C94B800121C64 /* ImageManagerTests.swift */; };
+		80EFFF66200C9C2300121C64 /* UIView+Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EFFF65200C9C2300121C64 /* UIView+Blur.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		80D2C25D200C124000BBAB9A /* Unbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Unbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80D2C25E200C190500BBAB9A /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		80EFFF63200C94B800121C64 /* ImageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManagerTests.swift; sourceTree = "<group>"; };
+		80EFFF65200C9C2300121C64 /* UIView+Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Blur.swift"; sourceTree = "<group>"; };
 		B246C57AFF5648A5B4C867E8 /* Pods_BlueRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -239,6 +241,7 @@
 				80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */,
 				80A4DED7200C438E00BFDCE9 /* UIColor+CustomColors.swift */,
 				80A4DEE2200C45E000BFDCE9 /* UIImage+Colors.swift */,
+				80EFFF65200C9C2300121C64 /* UIView+Blur.swift */,
 				80A4DECE200C412800BFDCE9 /* UIView+Parallax.swift */,
 			);
 			path = Extensions;
@@ -449,6 +452,7 @@
 				"${BUILT_PRODUCTS_DIR}/ParallaxHeader/ParallaxHeader.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Unbox/Unbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -457,6 +461,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParallaxHeader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Unbox.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,6 +493,7 @@
 				80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */,
 				8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */,
 				80A4DEE0200C451500BFDCE9 /* ColorfulBackgroundView.swift in Sources */,
+				80EFFF66200C9C2300121C64 /* UIView+Blur.swift in Sources */,
 				80A4DECD200C40F300BFDCE9 /* UIAlertAction+AppActions.swift in Sources */,
 				80544027200C0C980072ECDE /* BlueRecipes.xcdatamodeld in Sources */,
 				80A4DEC9200C406600BFDCE9 /* RecipeCollectionViewController.swift in Sources */,

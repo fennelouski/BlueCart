@@ -99,13 +99,13 @@ extension RecipeDataController {
         }
 
         if filteredRecipesArray == nil {
-            filteredRecipesArray = recipesArray
+            filteredRecipesArray = RecipeDataManager.recipesArray
         }
 
         // If the new text is not a substring of the previous search, then reset the recipes to the complete set
         if lastFilterString != nil,
             !text.contains(lastFilterString!) {
-            filteredRecipesArray = recipesArray
+            filteredRecipesArray = RecipeDataManager.recipesArray
         }
 
         RecipeDataController.filter(recipes: &filteredRecipesArray!, text: text)
@@ -178,6 +178,10 @@ fileprivate extension RecipeDataController {
                 return recipe1.ingredients?.count ?? 0 < recipe2.ingredients?.count ?? 0
             case .byFavorites:
                 if recipe1.isFavorite == recipe2.isFavorite {
+                    if recipe1.id == recipe2.id {
+                        // that way duplicates don't show up next to each other
+                        return arc4random_uniform(2) == 0
+                    }
                     return recipe1.id < recipe2.id
                 }
                 return recipe1.isFavorite

@@ -10,6 +10,7 @@ target 'BlueRecipes' do
     pod 'ParallaxHeader', '~> 2.0.0'
     pod 'Pastel'
     pod 'PureLayout'
+    pod 'SnapKit', '~> 4.0.0'
     pod 'Unbox'
     inherit! :search_paths
 end

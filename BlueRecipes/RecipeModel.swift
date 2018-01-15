@@ -102,6 +102,8 @@ class RecipeModel: NSObject, Unboxable {
         publisherURLString = unboxer.unbox(key: APIKeys.publisherURL)
         socialRank = unboxer.unbox(key: APIKeys.socialRank)
         ingredients = unboxer.unbox(key: APIKeys.ingredients)
+        super.init()
+        loadFavorite()
     }
     
     init(entity: Recipe) throws {
@@ -125,6 +127,7 @@ class RecipeModel: NSObject, Unboxable {
         self.title = title
         self.publisher = publisher
         super.init()
+        loadFavorite()
     }
 
     override var description: String {
@@ -246,7 +249,7 @@ fileprivate extension RecipeModel {
     }
 
     fileprivate var idKey: String {
-        return "ItemModelKey\(food2ForkURLString)"
+        return "RecipeModelKey\(id)"
     }
 }
 

@@ -9,11 +9,13 @@
 import UIKit
 import ParallaxHeader
 import PureLayout
+import SnapKit
 
 class DetailViewController: UIViewController, ImageUpdate {
     /// View that works to hold the scroll view inside the safe area using PureLayout
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     fileprivate let imageView = UIImageView(frame: .zero)
+    fileprivate let roundIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     fileprivate let favoriteButton = DOFavoriteButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44), image: UIImage(named: "heart.png"))
     fileprivate let backgroundView = ColorfulBackgroundView(frame: .zero)
 
@@ -62,13 +64,32 @@ class DetailViewController: UIViewController, ImageUpdate {
     }
 
     fileprivate func setupImageView() {
-        imageView.contentMode = .scaleAspectFit
-        imageView.contentScaleFactor = UIScreen.main.scale
+        imageView.contentMode = .scaleAspectFill
+
+        //setup bur view
+        imageView.blurView.setup(style: UIBlurEffectStyle.dark, alpha: 1).enable()
 
         tableView.parallaxHeader.view = imageView
-        tableView.parallaxHeader.height = 0
-        tableView.parallaxHeader.minimumHeight = 0
-        tableView.parallaxHeader.mode = .topFill
+        tableView.parallaxHeader.minimumHeight = 120
+        tableView.parallaxHeader.mode = .centerFill
+        tableView.parallaxHeader.parallaxHeaderDidScrollHandler = { parallaxHeader in
+            //update alpha of blur view on top of image view
+            parallaxHeader.view.blurView.alpha = 1 - parallaxHeader.progress
+        }
+
+        roundIcon.layer.borderColor = UIColor.white.cgColor
+        roundIcon.layer.borderWidth = 2
+        roundIcon.layer.cornerRadius = roundIcon.frame.width / 2
+        roundIcon.clipsToBounds = true
+
+        //add round image view to blur content view
+        //do not use vibrancyContentView to prevent vibrant effect
+        imageView.blurView.blurContentView?.addSubview(roundIcon)
+        //add constraints using SnpaKit library
+        roundIcon.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.height.equalTo(100)
+        }
 
         updateImage()
     }
@@ -125,6 +146,7 @@ class DetailViewController: UIViewController, ImageUpdate {
 
         if let image = imageView.image {
             tableView.parallaxHeader.height = min(view.bounds.height * 0.5, image.size.height)
+            roundIcon.image = image
         }
 
         backgroundView.updateColors(from: imageView.image)
@@ -207,7 +229,7 @@ extension DetailViewController: UITableViewDelegate {
 
         recipeModel.completedIngredients[ingredient] = !previousState
 
-        tableView.reloadRows(at: [indexPath], with: .fade)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
 
