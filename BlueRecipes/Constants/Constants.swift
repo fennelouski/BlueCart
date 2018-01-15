@@ -6,7 +6,7 @@
 //  Copyright © 2018 Nathan Fennel. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Constants {
     /// ","
@@ -21,6 +21,8 @@ class Constants {
     static let baseSearchURLString = "http://food2fork.com/api/search"
     /// "http://food2fork.com/api/search" as! URL
     static let baseSearchURL = URL(string: baseSearchURLString)!
+    /// 0.5
+    static let jpegCompressionAmount: CGFloat = 0.5
     /// 30
     static let maxRecipeRequestCount: Int = 30
     /// "Food2Fork"
