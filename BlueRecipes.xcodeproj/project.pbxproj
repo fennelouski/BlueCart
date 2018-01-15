@@ -17,6 +17,7 @@
 		80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8054404F200C0D130072ECDE /* PrivateConstants.swift */; };
 		80544052200C0D460072ECDE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544051200C0D460072ECDE /* Constants.swift */; };
 		80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80544053200C0E9B0072ECDE /* APIKeys.swift */; };
+		80A37415200D5B010023B5A2 /* DetailTableViewSectionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A37414200D5B010023B5A2 /* DetailTableViewSectionEnum.swift */; };
 		80A4DEC7200C38B000BFDCE9 /* BlueError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DEC6200C38B000BFDCE9 /* BlueError.swift */; };
 		80A4DEC9200C406600BFDCE9 /* RecipeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DEC8200C406600BFDCE9 /* RecipeCollectionViewController.swift */; };
 		80A4DECB200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */; };
@@ -77,6 +78,7 @@
 		8054404F200C0D130072ECDE /* PrivateConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
 		80544051200C0D460072ECDE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		80544053200C0E9B0072ECDE /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		80A37414200D5B010023B5A2 /* DetailTableViewSectionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewSectionEnum.swift; sourceTree = "<group>"; };
 		80A4DEC6200C38B000BFDCE9 /* BlueError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueError.swift; sourceTree = "<group>"; };
 		80A4DEC8200C406600BFDCE9 /* RecipeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewController.swift; sourceTree = "<group>"; };
 		80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+AppButtons.swift"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				80D2C252200C11F000BBAB9A /* RecipeModel.swift */,
+				80A37414200D5B010023B5A2 /* DetailTableViewSectionEnum.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				80544027200C0C980072ECDE /* BlueRecipes.xcdatamodeld in Sources */,
 				80A4DEC9200C406600BFDCE9 /* RecipeCollectionViewController.swift in Sources */,
 				80D2C255200C120700BBAB9A /* RecipeDataManager.swift in Sources */,
+				80A37415200D5B010023B5A2 /* DetailTableViewSectionEnum.swift in Sources */,
 				80A4DED4200C41D200BFDCE9 /* DataSortingOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
