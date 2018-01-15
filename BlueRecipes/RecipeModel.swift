@@ -107,7 +107,7 @@ class RecipeModel: NSObject, Unboxable {
     init(entity: Recipe) throws {
         imageURLString = entity.imageURLString
         sourceURLString = entity.sourceURLString
-        ingredients = entity.ingredients?.components(separatedBy: Constants.apiConcatenationSeparatorSet)
+        ingredients = entity.ingredients?.cleaned().components(separatedBy: Constants.apiConcatenationSeparatorSet)
         publisherURLString = entity.publisherURLString
         socialRank = entity.socialRank
         isFavorite = entity.isFavorite
@@ -156,7 +156,7 @@ class RecipeModel: NSObject, Unboxable {
     func recipeEntity(from context: NSManagedObjectContext) -> Recipe {
         let recipe = Recipe(context: context)
         recipe.id = id
-        recipe.ingredients = ingredients?.joined(separator: Constants.apiConcatenationSeparator)
+        recipe.ingredients = ingredients?.joined(separator: Constants.apiConcatenationSeparator).cleaned()
         recipe.imageURLString = imageURLString
         recipe.sourceURLString = sourceURLString
         recipe.food2ForkURLString = food2ForkURLString
@@ -168,7 +168,7 @@ class RecipeModel: NSObject, Unboxable {
 
     func update(to recipe: Recipe) {
         recipe.id = id
-        recipe.ingredients = ingredients?.joined(separator: Constants.apiConcatenationSeparator)
+        recipe.ingredients = ingredients?.joined(separator: Constants.apiConcatenationSeparator).cleaned()
         recipe.imageURLString = imageURLString
         recipe.sourceURLString = sourceURLString
         recipe.food2ForkURLString = food2ForkURLString
@@ -252,7 +252,7 @@ fileprivate extension RecipeModel {
 
 fileprivate extension String {
     func cleaned() -> String {
-        return self.replacingOccurrences(of: "&#8217;", with: "'").replacingOccurrences(of: "&amp;", with: "&")
+        return self.replacingOccurrences(of: "&#8217;", with: "'").replacingOccurrences(of: "&amp;", with: "&").replacingOccurrences(of: "&#39;", with: "`")
     }
 
 }

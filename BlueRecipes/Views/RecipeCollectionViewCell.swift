@@ -119,7 +119,7 @@ class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
         publisherLabel.autoPinEdge(toSuperviewEdge: .trailing)
         publisherLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: RecipeCollectionViewLayout.ingredientsLabelTitleLabelOffset)
         let publisherLabelPointSize = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .footnote).pointSize
-        publisherLabel.font = UIFont.systemFont(ofSize: publisherLabelPointSize)
+        publisherLabel.font = UIFont.italicSystemFont(ofSize: publisherLabelPointSize)
         publisherLabel.textColor = UIColor.gray
         publisherLabel.textAlignment = .right
     }

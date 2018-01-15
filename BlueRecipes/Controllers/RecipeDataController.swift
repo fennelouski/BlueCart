@@ -13,7 +13,7 @@ class RecipeDataController {
     fileprivate var recipesArray = [RecipeModel]()
     fileprivate var filteredRecipesArray: [RecipeModel]?
     fileprivate var lastFilterString: String?
-    var sortingOption: DataSortingOption = .random {
+    var sortingOption: DataSortingOption = .byFavorites {
         didSet {
             updateSorting()
         }
@@ -28,6 +28,9 @@ class RecipeDataController {
     func loadMoreRecipes(completion: @escaping () -> Void) {
         func updateRecipes() {
             recipesArray = RecipeDataManager.recipesArray
+            if sortingOption != .random {
+                updateSorting()
+            }
             completion()
         }
 

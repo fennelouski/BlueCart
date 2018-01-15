@@ -16,11 +16,17 @@ class RecipeCollectionViewLayout {
     static var itemSize = CGSize(width: 144, height: 93)
     static let minimumLineSpacing: CGFloat = 24
     static var numberOfColumns: Int {
-        guard let keyWindowWidth = UIApplication.shared.keyWindow?.bounds.width else {
+
+        guard let keyWindow = UIApplication.shared.keyWindow else {
             return 2
         }
 
-        let numberOfColumns = Int(keyWindowWidth / 180)
+        // This guarantees that:
+        // • the item size won't change size with orientation
+        // • multiple items will always fit horizontally in any orientation
+        let narrowerSide = min(keyWindow.bounds.width, keyWindow.bounds.height)
+
+        let numberOfColumns = Int(narrowerSide / 180)
         return max(numberOfColumns, 2)
     }
 

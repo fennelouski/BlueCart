@@ -162,9 +162,10 @@ extension DetailViewController: UITableViewDataSource {
                 return cell
         }
 
-        let ingredient = ingredients[indexPath.row]
-
         cell.backgroundColor = .clear
+        cell.textLabel?.numberOfLines = 0
+
+        let ingredient = ingredients[indexPath.row]
 
         let completed: Bool = {
             if let isCompleted = recipeModel.completedIngredients[ingredient] {
