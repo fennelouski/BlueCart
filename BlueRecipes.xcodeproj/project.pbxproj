@@ -27,6 +27,8 @@
 		80A4DED2200C417600BFDCE9 /* RecipeDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED1200C417600BFDCE9 /* RecipeDataController.swift */; };
 		80A4DED4200C41D200BFDCE9 /* DataSortingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED3200C41D200BFDCE9 /* DataSortingOptions.swift */; };
 		80A4DED6200C426D00BFDCE9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED5200C426D00BFDCE9 /* DetailViewController.swift */; };
+		80A4DED8200C438E00BFDCE9 /* UIColor+CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED7200C438E00BFDCE9 /* UIColor+CustomColors.swift */; };
+		80A4DEDA200C43CE00BFDCE9 /* RecipeCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED9200C43CE00BFDCE9 /* RecipeCollectionViewLayout.swift */; };
 		80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C252200C11F000BBAB9A /* RecipeModel.swift */; };
 		80D2C255200C120700BBAB9A /* RecipeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C254200C120700BBAB9A /* RecipeDataManager.swift */; };
 		80D2C256200C124000BBAB9A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25A200C124000BBAB9A /* Alamofire.framework */; };
@@ -81,6 +83,8 @@
 		80A4DED1200C417600BFDCE9 /* RecipeDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataController.swift; sourceTree = "<group>"; };
 		80A4DED3200C41D200BFDCE9 /* DataSortingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSortingOptions.swift; sourceTree = "<group>"; };
 		80A4DED5200C426D00BFDCE9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		80A4DED7200C438E00BFDCE9 /* UIColor+CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CustomColors.swift"; sourceTree = "<group>"; };
+		80A4DED9200C43CE00BFDCE9 /* RecipeCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewLayout.swift; sourceTree = "<group>"; };
 		80D2C252200C11F000BBAB9A /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		80D2C254200C120700BBAB9A /* RecipeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataManager.swift; sourceTree = "<group>"; };
 		80D2C25A200C124000BBAB9A /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,8 +204,9 @@
 		80A4DED0200C414900BFDCE9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */,
 				80A4DECC200C40F300BFDCE9 /* UIAlertAction+AppActions.swift */,
+				80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */,
+				80A4DED7200C438E00BFDCE9 /* UIColor+CustomColors.swift */,
 				80A4DECE200C412800BFDCE9 /* UIView+Parallax.swift */,
 			);
 			path = Extensions;
@@ -213,6 +218,7 @@
 				80544051200C0D460072ECDE /* Constants.swift */,
 				80544053200C0E9B0072ECDE /* APIKeys.swift */,
 				8054404F200C0D130072ECDE /* PrivateConstants.swift */,
+				80A4DED9200C43CE00BFDCE9 /* RecipeCollectionViewLayout.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -427,12 +433,14 @@
 				80A4DED6200C426D00BFDCE9 /* DetailViewController.swift in Sources */,
 				80A4DED2200C417600BFDCE9 /* RecipeDataController.swift in Sources */,
 				80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */,
+				80A4DED8200C438E00BFDCE9 /* UIColor+CustomColors.swift in Sources */,
 				80544052200C0D460072ECDE /* Constants.swift in Sources */,
 				80D2C25F200C190500BBAB9A /* ImageManager.swift in Sources */,
 				80A4DECB200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift in Sources */,
 				80A4DECF200C412800BFDCE9 /* UIView+Parallax.swift in Sources */,
 				80A4DEC7200C38B000BFDCE9 /* BlueError.swift in Sources */,
 				80544021200C0C980072ECDE /* ViewController.swift in Sources */,
+				80A4DEDA200C43CE00BFDCE9 /* RecipeCollectionViewLayout.swift in Sources */,
 				80544050200C0D130072ECDE /* PrivateConstants.swift in Sources */,
 				8054401F200C0C980072ECDE /* AppDelegate.swift in Sources */,
 				80A4DECD200C40F300BFDCE9 /* UIAlertAction+AppActions.swift in Sources */,
