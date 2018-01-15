@@ -9,7 +9,6 @@
 import UIKit
 import ParallaxHeader
 import PureLayout
-import SnapKit
 
 class DetailViewController: UIViewController, ImageUpdate {
     /// View that works to hold the scroll view inside the safe area using PureLayout
@@ -59,6 +58,7 @@ class DetailViewController: UIViewController, ImageUpdate {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
+        tableView.clipsToBounds = false
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewMargins()
     }
@@ -85,11 +85,8 @@ class DetailViewController: UIViewController, ImageUpdate {
         //add round image view to blur content view
         //do not use vibrancyContentView to prevent vibrant effect
         imageView.blurView.blurContentView?.addSubview(roundIcon)
-        //add constraints using SnpaKit library
-        roundIcon.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(100)
-        }
+        roundIcon.autoCenterInSuperview()
+        roundIcon.autoSetDimensions(to: Constants.roundIconSize)
 
         updateImage()
     }

@@ -29,16 +29,26 @@ class Constants {
     static let cellIdentifier = "cell identifier"
     /// 6.0
     static let defaultInset: CGFloat = 6
+    /// 18
+    static let initialLoadCount: Int = 18
     /// 0.5
     static let jpegCompressionAmount: CGFloat = 0.5
     /// "lastPageKey"
     static let lastPageKey = "lastPageKey"
     /// 30
-    static let maxRecipeRequestCount: Int = 30
+    static let maxRecipeRequestCount: Int = 1
     /// 5
-    static let maxSearchPage: Int = 5
+    static let maxSearchPage: Int = 3
     /// 6.0
     static let parallaxIntensity: CGFloat = 6
+    /// 200
+    static let preferredMinimumRecipeCount: Int = 200
+    /// "recipeIDsKey"
+    static let recipeIDsKey = "recipeIDsKey"
+    /// CGSize(width: 100, height: 100)
+    static let roundIconSize = CGSize(width: 100, height: 100)
+    /// "searchedTermsKey"
+    static let searchedTermsKey = "searchedTermsKey"
     /// "Food2Fork"
     static let serviceName = "Food2Fork"
 }

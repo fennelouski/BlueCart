@@ -171,9 +171,9 @@
 			isa = PBXGroup;
 			children = (
 				8054401E200C0C980072ECDE /* AppDelegate.swift */,
-				809CF6D2200C5CAC00AE46A8 /* Controllers */,
+				80A37413200D516F0023B5A2 /* Models */,
 				809CF6D3200C5CBE00AE46A8 /* Views */,
-				80D2C252200C11F000BBAB9A /* RecipeModel.swift */,
+				809CF6D2200C5CAC00AE46A8 /* Controllers */,
 				809CF6D4200C5CF800AE46A8 /* Managers */,
 				80A4DEC6200C38B000BFDCE9 /* BlueError.swift */,
 				80A4DED3200C41D200BFDCE9 /* DataSortingOptions.swift */,
@@ -232,6 +232,14 @@
 				80D2C25E200C190500BBAB9A /* ImageManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		80A37413200D516F0023B5A2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				80D2C252200C11F000BBAB9A /* RecipeModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		80A4DED0200C414900BFDCE9 /* Extensions */ = {
@@ -452,7 +460,6 @@
 				"${BUILT_PRODUCTS_DIR}/ParallaxHeader/ParallaxHeader.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Unbox/Unbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -461,7 +468,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParallaxHeader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Unbox.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

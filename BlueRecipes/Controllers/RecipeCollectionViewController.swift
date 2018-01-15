@@ -306,7 +306,7 @@ fileprivate extension RecipeCollectionViewController {
             self.refreshControl.endRefreshing()
         }
 
-        recipeDataController.loadMoreRecipes {
+        recipeDataController.loadMoreRecipes(forced: true) {
             self.collectionView?.reloadData()
         }
     }

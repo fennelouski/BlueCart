@@ -25,14 +25,21 @@ class RecipeDataController {
         }
     }
 
-    func loadMoreRecipes(completion: @escaping () -> Void) {
+    /**
+     Gets more recipes from the Data Manager.
+
+     - Parameter forced: Whether to check and see if there are already "enough" recipes loaded
+     - Parameter completion: Executed at the very end of all paged results
+     */
+    func loadMoreRecipes(forced: Bool = false, completion: @escaping () -> Void) {
         func updateRecipes() {
             recipesOrderedSet = RecipeDataManager.recipesOrderedSet
             updateSorting()
             completion()
         }
 
-        RecipeDataManager.loadMoreRecipes(partialCompletion: updateRecipes,
+        RecipeDataManager.loadMoreRecipes(forced: forced,
+                                          partialCompletion: updateRecipes,
                                           completion: updateRecipes)
     }
 

@@ -79,6 +79,7 @@ class RecipeModel: NSObject, Unboxable {
     var ingredients: [String]?
     /// Which steps the user has completed of the ingredients list
     var completedIngredients = [String : Bool]()
+    var objectID: NSManagedObjectID?
 
     override init() {
         id = "invalid id"
@@ -113,6 +114,7 @@ class RecipeModel: NSObject, Unboxable {
         publisherURLString = entity.publisherURLString
         socialRank = entity.socialRank
         isFavorite = entity.isFavorite
+        objectID = entity.objectID
         guard let food2ForkURLString = entity.food2ForkURLString,
             let id = entity.id,
             let title = entity.title,
@@ -156,7 +158,7 @@ class RecipeModel: NSObject, Unboxable {
         return compositeDescription
     }
 
-    func recipeEntity(from context: NSManagedObjectContext) -> Recipe {
+    func recipeEntity(in context: NSManagedObjectContext) -> Recipe {
         let recipe = Recipe(context: context)
         recipe.id = id
         recipe.ingredients = ingredients?.joined(separator: Constants.apiConcatenationSeparator).cleaned()
@@ -177,6 +179,16 @@ class RecipeModel: NSObject, Unboxable {
         recipe.food2ForkURLString = food2ForkURLString
         recipe.title = title
         recipe.publisher = publisher
+    }
+
+    func update(from updatedRecipe: RecipeModel) {
+        if let objectID = updatedRecipe.objectID {
+            self.objectID = objectID
+        }
+        if let ingredients = updatedRecipe.ingredients {
+            self.ingredients = ingredients
+        }
+        self.completedIngredients = updatedRecipe.completedIngredients
     }
 
 

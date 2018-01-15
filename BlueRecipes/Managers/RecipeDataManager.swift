@@ -8,23 +8,38 @@
 
 import Foundation
 import Alamofire
+import CoreData
 import Unbox
 
 // Singleton that retrieves and stores recipes from CoreData & the Food2Fork API
 class RecipeDataManager {
     private(set) public static var recipesOrderedSet = NSMutableOrderedSet()
-    private(set) public static var recipesDictionary = [String : RecipeModel]()
+    // Phrases that are currently being searched for. Reduces duplicates
+    fileprivate static var pendingSearchTerms = Set<String>()
+    // Phrases that have already been searched for and retrieved
+    fileprivate static var previouslySearchedTerms = Set<String>()
+    // A Running List of all IDs that have been retrieved from the API
+    fileprivate static var retrievedIDs = Set<String>()
 
+    /**
+     Loads the initial set of recipes.
+
+     First checks to see which ones are saved persistently.
+     If none are loaded, then it requests more remotely.
+
+     - Parameter partialCompletion: Executed at the very end of all paged results
+     - Parameter completion: Executed at the very end of all paged results
+     */
     static func getInitialRecipes(completion: @escaping () -> Void) {
-        getAllRecipesFromPeristentStore()
+        setupIDTracking()
+        setupSearchTerms()
+        getAllRecipesFromPeristentStore() // <- this could be broken up to get a small batch at first and then get more asynchronously
         if recipesOrderedSet.count == 0 {
             searchforItemsFromRemoteAPI(maxCount: 20) { (recipeModels) in
-                guard let recipeModels = recipeModels,
-                    recipeModels.count > 0 else {
+                guard let _ = filterNewRecipes(recipes: recipeModels) else {
                         print("It didn't work :(")
                         return
                 }
-                save(recipes: recipeModels)
                 completion()
             }
         } else {
@@ -35,29 +50,26 @@ class RecipeDataManager {
     /**
      Gets more recipes from the API.
 
+     - Parameter forced: Whether to check and see if there are already "enough" recipes loaded
      - Parameter partialCompletion: Executed at the very end of all paged results
      - Parameter completion: Executed at the very end of all paged results
      */
-    static func loadMoreRecipes(partialCompletion: @escaping () -> Void,
+    static func loadMoreRecipes(forced: Bool = false,
+                                partialCompletion: @escaping () -> Void,
                                 completion: @escaping () -> Void) {
+        guard forced || retrievedIDs.count < Constants.preferredMinimumRecipeCount else {
+            return
+        }
+
         let lastPage: Int = UserDefaults.standard.integer(forKey: Constants.lastPageKey) + 1
         UserDefaults.standard.set(lastPage, forKey: Constants.lastPageKey)
 
         let completionWithReturn: ([RecipeModel]?) -> Void = { recipes in
-            guard let recipeModels = recipes,
-                recipeModels.count > 0 else {
+            guard let _ = filterNewRecipes(recipes: recipes) else {
                     print("It didn't work :(")
                     return
             }
 
-            var uniqueRecipes = [RecipeModel]()
-            for recipeModel in recipeModels {
-                if !recipesOrderedSet.contains(recipeModel) {
-                    uniqueRecipes.append(recipeModel)
-                }
-            }
-            recipesOrderedSet.addObjects(from: uniqueRecipes)
-            save(recipes: uniqueRecipes)
             completion()
         }
 
@@ -74,11 +86,22 @@ class RecipeDataManager {
      - Parameter partialCompletion: Executed at the very end of all paged results
      - Parameter completion: Executed at the very end of all paged results
      */
-    static func searchforItemsFromAPI(searchTerms: [String]? = nil,
+    public static func searchforItemsFromAPI(searchTerms: [String]? = nil,
                                       pageNumber: Int = 1,
                                       enforceMaximum: Bool = false,
+                                      preventDuplicates: Bool = true,
                                       partialCompletion: @escaping () -> Void,
                                       completion: @escaping () -> Void) {
+
+        if let combinedTerm = searchTerms?.joined(separator: " "),
+            preventDuplicates &&
+            (pendingSearchTerms.contains(combinedTerm) ||
+            previouslySearchedTerms.contains(combinedTerm)) {
+            completion()
+            return
+        }
+
+        addPendingSearchTerms(searchTerms)
         if !enforceMaximum || (enforceMaximum && pageNumber <= Constants.maxSearchPage) {
             searchforItemsFromRemoteAPI(maxCount: Constants.maxRecipeRequestCount,
                                         searchTerms: searchTerms,
@@ -86,24 +109,17 @@ class RecipeDataManager {
                                         pageNumber: pageNumber,
                                         completion: { (recipes) in
                                             partialCompletion()
-                                            if let recipes = recipes {
-                                                var recipesToSave = [RecipeModel]()
-                                                for recipe in recipes {
-                                                    if recipesDictionary[recipe.food2ForkURLString] != nil {
-                                                        recipesDictionary[recipe.food2ForkURLString] = recipe
-                                                        recipesOrderedSet.add(recipe)
-                                                        recipesToSave.append(recipe)
-                                                    }
-                                                }
-                                                save(recipes: recipes)
-                                            }
+                                            let _ = filterNewRecipes(recipes: recipes)
 
+                                            // If this is the last recursive call, then call completion in this completion block
                                             if pageNumber + 1 >= Constants.maxSearchPage {
+                                                commitPendingSearchTerms(searchTerms, success: recipes != nil)
                                                 completion()
-                                            } else {
+                                            } else { // Get the next page of results
                                                 searchforItemsFromAPI(searchTerms: searchTerms,
                                                                       pageNumber: pageNumber+1,
                                                                       enforceMaximum: true,
+                                                                      preventDuplicates: false,
                                                                       partialCompletion: partialCompletion,
                                                                       completion: completion)
                                             }
@@ -117,13 +133,12 @@ class RecipeDataManager {
      - Parameter recipe: Recipe which details will be retrieved for
      - Parameter completion: Executed after receiving recipe details
      */
-    static func getDetails(for recipe: RecipeModel, completion: @escaping (RecipeModel) -> Void) {
+    public static func getDetails(for recipe: RecipeModel, completion: @escaping (RecipeModel) -> Void) {
         getRecipesFromAPI(recipeID: recipe.id) { (recipes) in
             guard let recipes = recipes else { return }
-            save(recipes: recipes)
             for updatedRecipe in recipes {
-                if updatedRecipe.id == recipe.id {
-                    recipe.ingredients = updatedRecipe.ingredients
+                if updatedRecipe == recipe {
+                    update(updatedRecipe: updatedRecipe)
                     completion(recipe)
                     return
                 }
@@ -132,6 +147,87 @@ class RecipeDataManager {
     }
 }
 
+// MARK: Ensuring uniqueness of items
+fileprivate extension RecipeDataManager {
+    /**
+     Filters out all recipes that have already been downloaded and updates ledger with new items.
+
+     - Parameter optionalRecipes: Recipes to save and filter
+     - Return: A filtered array of the input with only unique items
+     */
+    static func filterNewRecipes(recipes optionalRecipes: [RecipeModel]?) -> [RecipeModel]? {
+        guard let recipes = optionalRecipes else {
+            return optionalRecipes
+        }
+
+        var uniqueRecipes = [RecipeModel]()
+        for recipe in recipes {
+            guard !recipe.alreadyDownloaded else { continue }
+            uniqueRecipes.append(recipe)
+            retrievedIDs.insert(recipe.id)
+            recipesOrderedSet.add(recipe)
+        }
+
+        save(recipes: uniqueRecipes)
+
+        return uniqueRecipes
+    }
+}
+
+// MARK: Helper functions to reduce duplicate calls and objects
+fileprivate extension RecipeDataManager {
+    static func setupIDTracking() {
+        let previousIDs: [String] = {
+            if let savedIDs = UserDefaults.standard.array(forKey: Constants.recipeIDsKey) as? [String] {
+                return savedIDs
+            }
+
+            return [String]()
+        }()
+
+        for id in previousIDs {
+            retrievedIDs.insert(id)
+        }
+    }
+
+    static func saveIDTracking() {
+        UserDefaults.standard.setValue(retrievedIDs.map{ $0 }, forKey: Constants.recipeIDsKey)
+    }
+
+    static func setupSearchTerms() {
+        let previousSearchTerms: [String] = {
+            if let savedSearchTerms = UserDefaults.standard.array(forKey: Constants.searchedTermsKey) as? [String] {
+                return savedSearchTerms
+            }
+
+            return [String]()
+        }()
+
+        for searchTerm in previousSearchTerms {
+            previouslySearchedTerms.insert(searchTerm)
+        }
+    }
+
+    static func saveSearchTerms() {
+        UserDefaults.standard.setValue(previouslySearchedTerms.map{ $0 }, forKey: Constants.searchedTermsKey)
+    }
+
+    static func addPendingSearchTerms(_ terms: [String]?) {
+        guard let term = terms?.joined(separator: " ") else { return }
+        pendingSearchTerms.insert(term)
+    }
+
+    static func commitPendingSearchTerms(_ terms: [String]?, success: Bool) {
+        guard let term = terms?.joined(separator: " ") else { return }
+        pendingSearchTerms.remove(term)
+        if success {
+            previouslySearchedTerms.insert(term)
+            saveSearchTerms()
+        }
+    }
+}
+
+// MARK: Get, Save, and Update Recipes from Core Data
 fileprivate extension RecipeDataManager {
     static func getAllRecipesFromPeristentStore() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -152,6 +248,9 @@ fileprivate extension RecipeDataManager {
         }
     }
 
+    /// Saves the given recipes to core data
+    ///
+    /// NOTE: There is no checking for duplicates!
     static func save(recipes: [RecipeModel]) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             print("Error getting AppDelegate")
@@ -160,44 +259,90 @@ fileprivate extension RecipeDataManager {
 
         let context = appDelegate.persistentContainer.viewContext
 
-        var duplicates = [String : RecipeModel]()
-
         for recipeModel in recipes {
-            if recipesDictionary[recipeModel.food2ForkURLString] == nil {
-                let _ = recipeModel.recipeEntity(from: context)
-                recipesDictionary[recipeModel.food2ForkURLString] = recipeModel
-            } else {
-                duplicates[recipeModel.id] = recipeModel
-            }
-        }
-
-        if !duplicates.isEmpty {
-            let optionalFetchedRecipes: [Recipe]? = {
-                do {
-                    return try context.fetch(Recipe.fetchRequest())
-                }
-                catch {
-                    print("Fetching Failed \(error)")
-                    return nil
-                }
-            }()
-
-            guard let fetchedRecipes = optionalFetchedRecipes else { return }
-
-            for fetchedRecipe in fetchedRecipes {
-                guard let fetchedID = fetchedRecipe.id else { continue }
-                if duplicates.keys.contains(fetchedID) {
-                    guard let duplicate = duplicates[fetchedID] else { continue }
-//                    duplicate.update(to: fetchedRecipe)
-                    context.delete(fetchedRecipe)
-                }
-            }
+            let _ = recipeModel.recipeEntity(in: context)
         }
 
         appDelegate.saveContext()
     }
+
+    /// Updates core data and the active memory repository with the updatedRecipe
+    static func update(updatedRecipe: RecipeModel) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Error getting AppDelegate")
+            return
+        }
+
+        if let recipe = getSavedRecipe(updatedRecipe) {
+            updatedRecipe.update(to: recipe)
+        }
+
+        appDelegate.saveContext()
+
+        for oldRecipe in recipesOrderedSet {
+            guard let oldRecipe = oldRecipe as? RecipeModel else { continue }
+            if oldRecipe == updatedRecipe {
+                oldRecipe.update(from: updatedRecipe)
+            }
+        }
+    }
+
+    static func getSavedRecipe(_ recipe: RecipeModel?) -> Recipe? {
+        guard let recipe = recipe else {
+            return nil
+        }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Error getting AppDelegate")
+            return nil
+        }
+
+        let context = appDelegate.persistentContainer.viewContext
+
+        guard let objectID = recipe.objectID else {
+            let idPredicate = NSPredicate(format: "id = '\(recipe.id)'")
+            guard let matchingIDs = get(with: idPredicate),
+                let firstMatch = matchingIDs.first else {
+                return nil
+            }
+
+            return firstMatch
+        }
+
+        return context.object(with: objectID) as? Recipe
+    }
+
+    static func get(with queryPredicate: NSPredicate) -> [Recipe]? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Error getting AppDelegate")
+            return nil
+        }
+
+        guard let entityName = Recipe.entity().name else {
+            print("Error getting entity name \"Recipe.entity().name\"")
+            return nil
+        }
+
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        fetchRequest.predicate = queryPredicate
+
+        do {
+            return try context.fetch(fetchRequest) as? [Recipe]
+        } catch {
+            print("Fetch Failed: \(error)")
+        }
+
+        do {
+            try context.save()
+        } catch {
+            print("Saving Core Data Failed: \(error)")
+        }
+
+        return nil
+    }
 }
 
+// MARK: Search for items from the API
 fileprivate extension RecipeDataManager {
     static func searchforItemsFromRemoteAPI(maxCount: Int? = Constants.maxRecipeRequestCount,
                                             searchTerms: [String]? = nil,
@@ -253,9 +398,13 @@ fileprivate extension RecipeDataManager {
                 }
         }
     }
+}
 
+
+// MARK: Get individual recipe
+fileprivate extension RecipeDataManager {
     static func getRecipesFromAPI(recipeID: String,
-                           completion: @escaping ([RecipeModel]?) -> Void) {
+                                  completion: @escaping ([RecipeModel]?) -> Void) {
         Alamofire.request(
             Constants.baseRecipeRequestURL,
             method: .get,
@@ -293,6 +442,21 @@ fileprivate extension RecipeDataManager {
                     completion(nil)
                 }
         }
+    }
+}
+
+fileprivate extension RecipeModel {
+    var alreadyDownloaded: Bool {
+        return RecipeDataManager.retrievedIDs.contains(id)
+    }
+}
+
+fileprivate extension Recipe {
+    var alreadyDownloaded: Bool {
+        guard let id = self.id else {
+            return false // <- Debatable if this would identify that it has already been downloaded or not
+        }
+        return RecipeDataManager.retrievedIDs.contains(id)
     }
 }
 
