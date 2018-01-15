@@ -65,6 +65,11 @@ class RecipeCollectionViewController: UICollectionViewController {
         }
 
         setupNavigationController()
+
+        recipeDataController.loadMoreRecipes {
+            self.collectionView?.reloadData()
+            print("Recipes have loaded!")
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -123,12 +128,6 @@ class RecipeCollectionViewController: UICollectionViewController {
     }
 
     // MARK: <UICollectionViewDelegateFlowLayout>
-    func collectionView(collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAtIndex section: Int) -> UIEdgeInsets{
-        return UIEdgeInsetsMake(searchBar.frame.size.height, 0, 0, 0);
-    }
-
     func collectionView(collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeforItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
@@ -203,7 +202,7 @@ class RecipeCollectionViewController: UICollectionViewController {
 extension RecipeCollectionViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count > 0 {
-            filterActive    = true
+            filterActive = true
             filterContentForSearchText(searchText: searchText)
             collectionView?.reloadData()
         }
@@ -232,6 +231,18 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         filterActive = true
         view.endEditing(true)
+
+        let partialCompletion: () -> Void = {
+            self.collectionView?.reloadData()
+        }
+
+        let completion: () -> Void = {
+            self.collectionView?.reloadData()
+        }
+
+        recipeDataController.search(for: searchBar.text,
+                                    partialCompletion: partialCompletion,
+                                    completion: completion)
     }
 
     func cancelSearching() {
@@ -280,13 +291,13 @@ fileprivate extension RecipeCollectionViewController {
             self.collectionView?.reloadData()
         }
 
-        let alphabetically = UIAlertAction(title: "A-Z", style: .default) { (_) in
+        let alphabetically = UIAlertAction(title: "Title, A-Z", style: .default) { (_) in
             self.recipeDataController.sortingOption = .alphabetically
             reloadAndScrollToTop()
         }
         alertController.addAction(alphabetically)
 
-        let byValue = UIAlertAction(title: "$$$ - ¢", style: .default) { (_) in
+        let byValue = UIAlertAction(title: "Ingredients, A-Z", style: .default) { (_) in
             self.recipeDataController.sortingOption = .byIngredients
             reloadAndScrollToTop()
         }
@@ -298,7 +309,7 @@ fileprivate extension RecipeCollectionViewController {
         }
         alertController.addAction(byFavorites)
 
-        let random = UIAlertAction(title: "🎲", style: .default) { (_) in
+        let random = UIAlertAction(title: "🎲 Random 🎰", style: .default) { (_) in
             self.recipeDataController.sortingOption = .random
             reloadAndScrollToTop()
         }

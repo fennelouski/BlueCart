@@ -26,11 +26,15 @@ class Constants {
     /// "http://food2fork.com/api/search" as! URL
     static let baseSearchURL = URL(string: baseSearchURLString)!
     /// 6.0
-    static let defaultImageInset: CGFloat = 6
+    static let defaultInset: CGFloat = 6
     /// 0.5
     static let jpegCompressionAmount: CGFloat = 0.5
+    /// "lastPageKey"
+    static let lastPageKey = "lastPageKey"
     /// 30
     static let maxRecipeRequestCount: Int = 30
+    /// 5
+    static let maxSearchPage: Int = 5
     /// 6.0
     static let parallaxIntensity: CGFloat = 6
     /// "Food2Fork"

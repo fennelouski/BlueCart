@@ -35,7 +35,7 @@ class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
 
     fileprivate func updateView(animated: Bool = false) {
         titleLabel.text = recipeModel.title
-        ingredientsLabel.text = recipeModel.ingredients?.joined(separator: ", ")
+        ingredientsLabel.text = recipeModel.ingredients?.joined(separator: ", ") ?? recipeModel.publisher ?? recipeModel.socialRank
         updateFavoriteButton(animated: animated)
         updateImage()
     }

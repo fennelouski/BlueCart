@@ -97,7 +97,7 @@ class RecipeModel: NSObject, Unboxable {
         imageURLString = unboxer.unbox(key: APIKeys.imageURL)
         sourceURLString = unboxer.unbox(key: APIKeys.sourceURL)
         food2ForkURLString = try unboxer.unbox(key: APIKeys.food2ForkURL)
-        title = try unboxer.unbox(key: APIKeys.title)
+        title = (try unboxer.unbox(key: APIKeys.title) as String).cleaned()
         publisher = try unboxer.unbox(key: APIKeys.publisher)
         publisherURLString = unboxer.unbox(key: APIKeys.publisherURL)
         socialRank = unboxer.unbox(key: APIKeys.socialRank)
@@ -109,7 +109,6 @@ class RecipeModel: NSObject, Unboxable {
         sourceURLString = entity.sourceURLString
         id = entity.id
         ingredients = entity.ingredients?.components(separatedBy: Constants.apiConcatenationSeparatorSet)
-        
         publisherURLString = entity.publisherURLString
         socialRank = entity.socialRank
         isFavorite = entity.isFavorite
@@ -167,6 +166,13 @@ class RecipeModel: NSObject, Unboxable {
 
         return recipe
     }
+
+    static func == (lhs: RecipeModel, rhs: RecipeModel) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.title == rhs.title &&
+            lhs.imageURLString == rhs.imageURLString &&
+            lhs.food2ForkURL == rhs.food2ForkURL
+    }
 }
 
 extension Recipe {
@@ -220,5 +226,12 @@ fileprivate extension RecipeModel {
     fileprivate var idKey: String {
         return "ItemModelKey\(food2ForkURLString)"
     }
+}
+
+fileprivate extension String {
+    func cleaned() -> String {
+        return self.replacingOccurrences(of: "&#8217;", with: "'")
+    }
+
 }
 

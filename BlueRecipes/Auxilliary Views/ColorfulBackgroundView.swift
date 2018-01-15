@@ -22,7 +22,7 @@ class ColorfulBackgroundView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        alpha = 0.6
+        alpha = 0.3
     }
 
     func updateColors(from imageOptional: UIImage? = nil) {

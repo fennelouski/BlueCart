@@ -10,6 +10,8 @@ import UIKit
 import PureLayout
 
 class DetailViewController: UIViewController, ImageUpdate {
+    /// View that works to hold the scroll view inside the safe area using PureLayout
+    fileprivate let scrollViewContainer = UIView(frame: .zero)
     fileprivate let scrollView = UIScrollView(frame: .zero)
     fileprivate let imageView = UIImageView(frame: .zero)
     fileprivate let nameLabel = UILabel(frame: .zero)
@@ -43,6 +45,7 @@ class DetailViewController: UIViewController, ImageUpdate {
 
     // MARK: Setup
     fileprivate func setupSubviews() {
+        setupScrollView()
         setupImageView()
         setupLabels()
         setupFavoriteButton()
@@ -50,15 +53,30 @@ class DetailViewController: UIViewController, ImageUpdate {
         setupNavigationController()
     }
 
+    fileprivate func setupScrollView() {
+        view.addSubview(scrollViewContainer)
+        scrollViewContainer.autoPinEdgesToSuperviewMargins()
+        scrollViewContainer.addSubview(scrollView)
+        let insets = UIEdgeInsets(top: Constants.defaultInset, left: Constants.defaultInset, bottom: Constants.defaultInset, right: Constants.defaultInset)
+        scrollView.autoPinEdgesToSuperviewEdges(with: insets)
+        // keeps the scrollview from scrolling horizontally
+        let negativeInsets = UIEdgeInsets(top: -Constants.defaultInset,
+                                          left: -Constants.defaultInset,
+                                          bottom: -Constants.defaultInset,
+                                          right: -Constants.defaultInset)
+        scrollView.contentInset = negativeInsets
+    }
+
     fileprivate func setupImageView() {
         scrollView.addSubview(imageView)
         imageView.contentMode = .scaleAspectFit
         imageView.contentScaleFactor = UIScreen.main.scale
         imageView.addParallax(intensity: Constants.parallaxIntensity)
-        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: Constants.defaultImageInset)
-        imageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: Constants.defaultImageInset)
-        imageView.autoPinEdge(toSuperviewEdge: .top, withInset: Constants.defaultImageInset)
+        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: Constants.defaultInset)
+        imageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: Constants.defaultInset)
+        imageView.autoPinEdge(toSuperviewEdge: .top, withInset: Constants.defaultInset)
         imageView.autoSetDimension(.height, toSize: UIScreen.main.bounds.height * 0.5, relation: .lessThanOrEqual)
+        imageView.autoMatch(.width, to: .width, of: scrollView)
 
         updateImage()
     }

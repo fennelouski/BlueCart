@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Data Controller that interacts with DataManager to get recipes
 class RecipeDataController {
     fileprivate var recipesArray = [RecipeModel]()
     fileprivate var filteredRecipesArray: [RecipeModel]?
@@ -22,6 +23,15 @@ class RecipeDataController {
         RecipeDataManager.getInitialRecipes {
             self.recipesArray = RecipeDataManager.recipesArray
         }
+    }
+
+    func loadMoreRecipes(completion: @escaping () -> Void) {
+        func updateRecipes() {
+            recipesArray = RecipeDataManager.recipesArray
+            completion()
+        }
+        RecipeDataManager.loadMoreRecipes(partialCompletion: updateRecipes,
+                                          completion: completion)
     }
 
     func sectionCount() -> Int {
@@ -44,7 +54,41 @@ class RecipeDataController {
 
 // MARK: Searching
 extension RecipeDataController {
-    func filterRecipes(by text: String) {
+    func search(for text: String?,
+                partialCompletion: @escaping () -> Void,
+                completion: @escaping () -> Void) {
+        let searchTerms = text?.components(separatedBy: .whitespacesAndNewlines)
+        filterRecipes(by: text)
+
+        let partialCompletion: (_ recipes: [RecipeModel]?) -> Void = { recipes in
+            guard let recipes = recipes,
+                recipes.isEmpty else { return }
+
+            self.recipesArray = RecipeDataManager.recipesArray
+            self.filterRecipes(by: self.lastFilterString)
+            partialCompletion()
+        }
+
+        let completion: () -> Void = {
+            self.recipesArray = RecipeDataManager.recipesArray
+            completion()
+        }
+
+        RecipeDataManager.searchforItemsFromAPI(searchTerms: searchTerms,
+                                                pageNumber: 0,
+                                                enforceMaximum: true,
+                                                partialCompletion: partialCompletion,
+                                                completion: completion)
+
+        filterRecipes(by: text)
+    }
+
+    func filterRecipes(by optionalText: String?) {
+        guard let text = optionalText else {
+            clearFilters()
+            return
+        }
+
         if filteredRecipesArray == nil {
             filteredRecipesArray = recipesArray
         }
