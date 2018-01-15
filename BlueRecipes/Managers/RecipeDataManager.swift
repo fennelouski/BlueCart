@@ -32,6 +32,16 @@ class RecipeDataManager {
         }
     }
 
+    /**
+     Adds the imageURL to the running queue if needed.
+     If the imageURL is already in the queue, nothing changes.
+
+     - Parameter searchTerms: The words that will be used to search the API
+     - Parameter pageNumber: The page number that is being returned (To keep track of concurrent requests)
+     - Parameter enforceMaximum: Whether or not to recognize the maximum number of pages to search through
+     - Parameter partialCompletion: Executed at the very end of all paged results
+     - Parameter completion: Executed at the very end of all paged results
+     */
     static func loadMoreRecipes(partialCompletion: @escaping () -> Void,
                                 completion: @escaping () -> Void) {
         let lastPage: Int = UserDefaults.standard.integer(forKey: Constants.lastPageKey) + 1
@@ -66,7 +76,7 @@ class RecipeDataManager {
                                       enforceMaximum: Bool = false,
                                       partialCompletion: @escaping ([RecipeModel]?) -> Void,
                                       completion: @escaping () -> Void) {
-        if enforceMaximum && pageNumber <= Constants.maxSearchPage {
+        if !enforceMaximum || (enforceMaximum && pageNumber <= Constants.maxSearchPage) {
             searchforItemsFromAPI(maxCount: Constants.maxRecipeRequestCount,
                                   searchTerms: searchTerms,
                                   sortOption: .rating,
@@ -82,6 +92,7 @@ class RecipeDataManager {
                                             }
                                         }
                                         save(recipes: recipes)
+                                        partialCompletion(recipes)
                                     }
                                     partialCompletion(recipes)
                                     searchforItemsFromAPI(searchTerms: searchTerms,
