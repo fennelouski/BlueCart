@@ -169,6 +169,7 @@ fileprivate extension RecipeDataManager {
         }
 
         save(recipes: uniqueRecipes)
+        saveIDTracking()
 
         return uniqueRecipes
     }
