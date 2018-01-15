@@ -1,5 +1,5 @@
 //
-//  UIView+Parallax.swift
+//  RecipeDataController.swift
 //  BlueRecipes
 //
 //  Created by Nathan Fennel on 1/14/18.

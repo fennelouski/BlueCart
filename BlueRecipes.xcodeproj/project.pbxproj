@@ -24,6 +24,9 @@
 		80A4DECB200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */; };
 		80A4DECD200C40F300BFDCE9 /* UIAlertAction+AppActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DECC200C40F300BFDCE9 /* UIAlertAction+AppActions.swift */; };
 		80A4DECF200C412800BFDCE9 /* UIView+Parallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DECE200C412800BFDCE9 /* UIView+Parallax.swift */; };
+		80A4DED2200C417600BFDCE9 /* RecipeDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED1200C417600BFDCE9 /* RecipeDataController.swift */; };
+		80A4DED4200C41D200BFDCE9 /* DataSortingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED3200C41D200BFDCE9 /* DataSortingOptions.swift */; };
+		80A4DED6200C426D00BFDCE9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A4DED5200C426D00BFDCE9 /* DetailViewController.swift */; };
 		80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C252200C11F000BBAB9A /* RecipeModel.swift */; };
 		80D2C255200C120700BBAB9A /* RecipeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2C254200C120700BBAB9A /* RecipeDataManager.swift */; };
 		80D2C256200C124000BBAB9A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D2C25A200C124000BBAB9A /* Alamofire.framework */; };
@@ -75,6 +78,9 @@
 		80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+AppButtons.swift"; sourceTree = "<group>"; };
 		80A4DECC200C40F300BFDCE9 /* UIAlertAction+AppActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+AppActions.swift"; sourceTree = "<group>"; };
 		80A4DECE200C412800BFDCE9 /* UIView+Parallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Parallax.swift"; sourceTree = "<group>"; };
+		80A4DED1200C417600BFDCE9 /* RecipeDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataController.swift; sourceTree = "<group>"; };
+		80A4DED3200C41D200BFDCE9 /* DataSortingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSortingOptions.swift; sourceTree = "<group>"; };
+		80A4DED5200C426D00BFDCE9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		80D2C252200C11F000BBAB9A /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		80D2C254200C120700BBAB9A /* RecipeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataManager.swift; sourceTree = "<group>"; };
 		80D2C25A200C124000BBAB9A /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,14 +160,15 @@
 			children = (
 				8054401E200C0C980072ECDE /* AppDelegate.swift */,
 				80544020200C0C980072ECDE /* ViewController.swift */,
+				80A4DED5200C426D00BFDCE9 /* DetailViewController.swift */,
 				80A4DEC8200C406600BFDCE9 /* RecipeCollectionViewController.swift */,
 				80D2C252200C11F000BBAB9A /* RecipeModel.swift */,
 				80D2C254200C120700BBAB9A /* RecipeDataManager.swift */,
+				80A4DED1200C417600BFDCE9 /* RecipeDataController.swift */,
 				80D2C25E200C190500BBAB9A /* ImageManager.swift */,
 				80A4DEC6200C38B000BFDCE9 /* BlueError.swift */,
-				80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */,
-				80A4DECC200C40F300BFDCE9 /* UIAlertAction+AppActions.swift */,
-				80A4DECE200C412800BFDCE9 /* UIView+Parallax.swift */,
+				80A4DED3200C41D200BFDCE9 /* DataSortingOptions.swift */,
+				80A4DED0200C414900BFDCE9 /* Extensions */,
 				80D2C251200C11E300BBAB9A /* Constants */,
 				80544022200C0C980072ECDE /* Main.storyboard */,
 				80544028200C0C980072ECDE /* Assets.xcassets */,
@@ -188,6 +195,16 @@
 				80544043200C0C980072ECDE /* Info.plist */,
 			);
 			path = BlueRecipesUITests;
+			sourceTree = "<group>";
+		};
+		80A4DED0200C414900BFDCE9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				80A4DECA200C40C200BFDCE9 /* UIBarButtonItem+AppButtons.swift */,
+				80A4DECC200C40F300BFDCE9 /* UIAlertAction+AppActions.swift */,
+				80A4DECE200C412800BFDCE9 /* UIView+Parallax.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		80D2C251200C11E300BBAB9A /* Constants */ = {
@@ -407,6 +424,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				80D2C253200C11F000BBAB9A /* RecipeModel.swift in Sources */,
+				80A4DED6200C426D00BFDCE9 /* DetailViewController.swift in Sources */,
+				80A4DED2200C417600BFDCE9 /* RecipeDataController.swift in Sources */,
 				80544054200C0E9B0072ECDE /* APIKeys.swift in Sources */,
 				80544052200C0D460072ECDE /* Constants.swift in Sources */,
 				80D2C25F200C190500BBAB9A /* ImageManager.swift in Sources */,
@@ -420,6 +439,7 @@
 				80544027200C0C980072ECDE /* BlueRecipes.xcdatamodeld in Sources */,
 				80A4DEC9200C406600BFDCE9 /* RecipeCollectionViewController.swift in Sources */,
 				80D2C255200C120700BBAB9A /* RecipeDataManager.swift in Sources */,
+				80A4DED4200C41D200BFDCE9 /* DataSortingOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

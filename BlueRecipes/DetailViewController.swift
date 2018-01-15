@@ -1,5 +1,5 @@
 //
-//  UIAlertAction+AppActions.swift
+//  DetailViewController.swift
 //  BlueRecipes
 //
 //  Created by Nathan Fennel on 1/14/18.
