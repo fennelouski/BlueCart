@@ -50,6 +50,10 @@ class RecipeCollectionViewController: UICollectionViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         setupNavigationController()
+
+        recipeDataController.loadMoreRecipes {
+            self.collectionView?.reloadData()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,10 +69,6 @@ class RecipeCollectionViewController: UICollectionViewController {
         }
 
         setupNavigationController()
-
-        recipeDataController.loadMoreRecipes {
-            self.collectionView?.reloadData()
-        }
 
         self.refreshControl.endRefreshing()
     }

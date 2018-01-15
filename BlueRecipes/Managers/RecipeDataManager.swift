@@ -18,7 +18,7 @@ class RecipeDataManager {
     static func getInitialRecipes(completion: @escaping () -> Void) {
         getAllRecipesFromPeristentStore()
         if recipesArray.isEmpty {
-            searchforItemsFromAPI(maxCount: 20) { (recipeModels) in
+            searchforItemsFromRemoteAPI(maxCount: 20) { (recipeModels) in
                 guard let recipeModels = recipeModels,
                     recipeModels.count > 0 else {
                         print("It didn't work :(")
@@ -43,19 +43,19 @@ class RecipeDataManager {
         let lastPage: Int = UserDefaults.standard.integer(forKey: Constants.lastPageKey) + 1
         UserDefaults.standard.set(lastPage, forKey: Constants.lastPageKey)
 
-        let partialCompletion: ([RecipeModel]?) -> Void = { (recipeModels) in
-            guard let recipeModels = recipeModels,
+        let completionWithReturn: ([RecipeModel]?) -> Void = { recipes in
+            guard let recipeModels = recipes,
                 recipeModels.count > 0 else {
                     print("It didn't work :(")
                     return
             }
             save(recipes: recipeModels)
-            partialCompletion()
+            recipesArray.append(contentsOf: recipeModels)
+            completion()
         }
 
-        searchforItemsFromAPI(pageNumber: lastPage,
-                              partialCompletion: partialCompletion,
-                              completion: completion)
+        searchforItemsFromRemoteAPI(pageNumber: lastPage,
+                                    completion: completionWithReturn)
     }
 
     /**
@@ -70,35 +70,37 @@ class RecipeDataManager {
     static func searchforItemsFromAPI(searchTerms: [String]? = nil,
                                       pageNumber: Int = 1,
                                       enforceMaximum: Bool = false,
-                                      partialCompletion: @escaping ([RecipeModel]?) -> Void,
+                                      partialCompletion: @escaping () -> Void,
                                       completion: @escaping () -> Void) {
         if !enforceMaximum || (enforceMaximum && pageNumber <= Constants.maxSearchPage) {
-            searchforItemsFromAPI(maxCount: Constants.maxRecipeRequestCount,
-                                  searchTerms: searchTerms,
-                                  sortOption: .rating,
-                                  pageNumber: pageNumber,
-                                  completion: { (recipes) in
-                                    if let recipes = recipes {
-                                        var recipesToSave = [RecipeModel]()
-                                        for recipe in recipes {
-                                            if recipesDictionary[recipe.food2ForkURLString] != nil {
-                                                recipesDictionary[recipe.food2ForkURLString] = recipe
-                                                recipesArray.insert(recipe, at: 0)
-                                                recipesToSave.append(recipe)
+            searchforItemsFromRemoteAPI(maxCount: Constants.maxRecipeRequestCount,
+                                        searchTerms: searchTerms,
+                                        sortOption: .rating,
+                                        pageNumber: pageNumber,
+                                        completion: { (recipes) in
+                                            partialCompletion()
+                                            if let recipes = recipes {
+                                                var recipesToSave = [RecipeModel]()
+                                                for recipe in recipes {
+                                                    if recipesDictionary[recipe.food2ForkURLString] != nil {
+                                                        recipesDictionary[recipe.food2ForkURLString] = recipe
+                                                        recipesArray.insert(recipe, at: 0)
+                                                        recipesToSave.append(recipe)
+                                                    }
+                                                }
+                                                save(recipes: recipes)
                                             }
-                                        }
-                                        save(recipes: recipes)
-                                        partialCompletion(recipes)
-                                    }
-                                    partialCompletion(recipes)
-                                    searchforItemsFromAPI(searchTerms: searchTerms,
-                                                          pageNumber: pageNumber+1,
-                                                          enforceMaximum: true,
-                                                          partialCompletion: partialCompletion,
-                                                          completion: completion)
+
+                                            if pageNumber + 1 >= Constants.maxSearchPage {
+                                                completion()
+                                            } else {
+                                                searchforItemsFromAPI(searchTerms: searchTerms,
+                                                                      pageNumber: pageNumber+1,
+                                                                      enforceMaximum: true,
+                                                                      partialCompletion: partialCompletion,
+                                                                      completion: completion)
+                                            }
             })
-        } else {
-            completion()
         }
     }
 
@@ -179,7 +181,8 @@ fileprivate extension RecipeDataManager {
                 guard let fetchedID = fetchedRecipe.id else { continue }
                 if duplicates.keys.contains(fetchedID) {
                     guard let duplicate = duplicates[fetchedID] else { continue }
-                    duplicate.update(to: fetchedRecipe)
+//                    duplicate.update(to: fetchedRecipe)
+                    context.delete(fetchedRecipe)
                 }
             }
         }
@@ -189,11 +192,11 @@ fileprivate extension RecipeDataManager {
 }
 
 fileprivate extension RecipeDataManager {
-    static func searchforItemsFromAPI(maxCount: Int? = Constants.maxRecipeRequestCount,
-                                 searchTerms: [String]? = nil,
-                                 sortOption: apiSortOption? = nil,
-                                 pageNumber: Int? = nil,
-                                 completion: @escaping ([RecipeModel]?) -> Void) {
+    static func searchforItemsFromRemoteAPI(maxCount: Int? = Constants.maxRecipeRequestCount,
+                                            searchTerms: [String]? = nil,
+                                            sortOption: apiSortOption? = nil,
+                                            pageNumber: Int? = nil,
+                                            completion: @escaping ([RecipeModel]?) -> Void) {
 
         var parameters = [APIKeys.key: PrivateConstants.apiKey]
         if let concatenatedSearchTerms = searchTerms?.joined(separator: Constants.apiConcatenationSeparator) {

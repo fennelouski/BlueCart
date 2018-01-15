@@ -10,7 +10,7 @@ import Foundation
 
 // Data Controller that interacts with DataManager to get recipes
 class RecipeDataController {
-    fileprivate var recipesArray = [RecipeModel]()
+    fileprivate var recipesOrderedSet = NSOrderedSet()
     fileprivate var filteredRecipesArray: [RecipeModel]?
     fileprivate var lastFilterString: String?
     var sortingOption: DataSortingOption = .byFavorites {
@@ -21,13 +21,13 @@ class RecipeDataController {
 
     init() {
         RecipeDataManager.getInitialRecipes {
-            self.recipesArray = RecipeDataManager.recipesArray
+            self.recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
         }
     }
 
     func loadMoreRecipes(completion: @escaping () -> Void) {
         func updateRecipes() {
-            recipesArray = RecipeDataManager.recipesArray
+            recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
             if sortingOption != .random {
                 updateSorting()
             }
@@ -47,16 +47,16 @@ class RecipeDataController {
     }
 
     func recipeCount(forSection section: Int) -> Int {
-        return recipesArray.count
+        return recipesOrderedSet.count
     }
 
     func recipe(for indexPath: IndexPath) -> RecipeModel {
-        guard indexPath.row < recipesArray.count else {
-            print("Index Path beyond bounds for recipes \(indexPath.row) > \(recipesArray.count)")
+        guard indexPath.row < recipesOrderedSet.count else {
+            print("Index Path beyond bounds for recipes \(indexPath.row) > \(recipesOrderedSet.count)")
             return RecipeModel()
         }
 
-        return recipesArray[indexPath.row]
+        return recipesOrderedSet.object(at: indexPath.row) as! RecipeModel
     }
 }
 
@@ -68,17 +68,14 @@ extension RecipeDataController {
         let searchTerms = text?.components(separatedBy: .whitespacesAndNewlines)
         filterRecipes(by: text)
 
-        let partialCompletion: (_ recipes: [RecipeModel]?) -> Void = { recipes in
-            guard let recipes = recipes,
-                recipes.isEmpty else { return }
-
-            self.recipesArray = RecipeDataManager.recipesArray
+        let partialCompletion: () -> Void = {
+            self.recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
             self.filterRecipes(by: self.lastFilterString)
             partialCompletion()
         }
 
         let completion: () -> Void = {
-            self.recipesArray = RecipeDataManager.recipesArray
+            self.recipesOrderedSet = NSOrderedSet(array: RecipeDataManager.recipesArray)
             self.filterRecipes(by: self.lastFilterString)
             completion()
         }
@@ -98,15 +95,7 @@ extension RecipeDataController {
             return
         }
 
-        if filteredRecipesArray == nil {
-            filteredRecipesArray = RecipeDataManager.recipesArray
-        }
-
-        // If the new text is not a substring of the previous search, then reset the recipes to the complete set
-        if lastFilterString != nil,
-            !text.contains(lastFilterString!) {
-            filteredRecipesArray = RecipeDataManager.recipesArray
-        }
+        filteredRecipesArray = recipesOrderedSet.array as? [RecipeModel] ?? RecipeDataManager.recipesArray
 
         RecipeDataController.filter(recipes: &filteredRecipesArray!, text: text)
         lastFilterString = text
@@ -166,6 +155,8 @@ extension RecipeDataController {
 // MARK: Sorting
 fileprivate extension RecipeDataController {
     func updateSorting() {
+        var recipesArray = recipesOrderedSet.array as! [RecipeModel]
+
         if sortingOption == .random {
             recipesArray.shuffle()
             return
@@ -178,15 +169,12 @@ fileprivate extension RecipeDataController {
                 return recipe1.ingredients?.count ?? 0 < recipe2.ingredients?.count ?? 0
             case .byFavorites:
                 if recipe1.isFavorite == recipe2.isFavorite {
-                    if recipe1.id == recipe2.id {
-                        // that way duplicates don't show up next to each other
-                        return arc4random_uniform(2) == 0
-                    }
                     return recipe1.id < recipe2.id
                 }
                 return recipe1.isFavorite
             }
         }
+        recipesOrderedSet = NSOrderedSet(array: recipesArray)
     }
 }
 

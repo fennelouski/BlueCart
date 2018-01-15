@@ -183,15 +183,13 @@ class RecipeModel: NSObject, Unboxable {
     static func == (lhs: RecipeModel, rhs: RecipeModel) -> Bool {
         return lhs.id == rhs.id &&
             lhs.title == rhs.title &&
-            lhs.imageURLString == rhs.imageURLString &&
-            lhs.food2ForkURLString == rhs.food2ForkURLString
+            lhs.publisher == rhs.publisher
     }
 
     static func == (lhs: RecipeModel, rhs: Recipe) -> Bool {
         return lhs.id == rhs.id &&
             lhs.title == rhs.title &&
-            lhs.imageURLString == rhs.imageURLString &&
-            lhs.food2ForkURLString == rhs.food2ForkURLString
+            lhs.publisher == rhs.publisher
     }
 
     static func == (lhs: Recipe, rhs: RecipeModel) -> Bool {
