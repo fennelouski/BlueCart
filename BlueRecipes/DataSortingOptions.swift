@@ -9,7 +9,7 @@
 import Foundation
 
 enum DataSortingOption {
-    case alphabetically, byIngredients, byFavorites, random
+    case alphabetically, byIngredients, byFavorites
 
     // TODO:
     // Move sorting logic to this enum

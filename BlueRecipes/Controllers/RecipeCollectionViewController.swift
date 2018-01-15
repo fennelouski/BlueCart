@@ -340,12 +340,6 @@ fileprivate extension RecipeCollectionViewController {
         }
         alertController.addAction(byFavorites)
 
-        let random = UIAlertAction(title: "🎲 Random 🎰", style: .default) { (_) in
-            self.recipeDataController.sortingOption = .random
-            reloadAndScrollToTop()
-        }
-        alertController.addAction(random)
-
         alertController.addAction(UIAlertAction.cancel)
 
         present(alertController, animated: true, completion: nil)

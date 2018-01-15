@@ -28,9 +28,7 @@ class RecipeDataController {
     func loadMoreRecipes(completion: @escaping () -> Void) {
         func updateRecipes() {
             recipesOrderedSet = RecipeDataManager.recipesOrderedSet
-            if sortingOption != .random {
-                updateSorting()
-            }
+            updateSorting()
             completion()
         }
 
@@ -157,16 +155,16 @@ fileprivate extension RecipeDataController {
     func updateSorting() {
         var recipesArray = recipesOrderedSet.array as! [RecipeModel]
 
-        if sortingOption == .random {
-            recipesArray.shuffle()
-            return
-        }
         recipesArray.sort { (recipe1, recipe2) -> Bool in
             switch self.sortingOption {
-            case .alphabetically, .random:
+            case .alphabetically:
                 return recipe1.title < recipe2.title
             case .byIngredients:
-                return recipe1.ingredients?.count ?? 0 < recipe2.ingredients?.count ?? 0
+                guard let ingredients1 = recipe1.ingredients,
+                    let ingredients2 = recipe2.ingredients else {
+                        return recipe1.food2ForkURLString > recipe2.food2ForkURLString
+                }
+                return ingredients1.count < ingredients2.count
             case .byFavorites:
                 if recipe1.isFavorite == recipe2.isFavorite {
                     return recipe1.id < recipe2.id
