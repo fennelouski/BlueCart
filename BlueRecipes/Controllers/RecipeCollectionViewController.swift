@@ -221,6 +221,7 @@ extension RecipeCollectionViewController: UISearchBarDelegate {
             filterContentForSearchText(searchText: searchText)
             collectionView?.reloadData()
         }
+        updateNavigationTitle()
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
