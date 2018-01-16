@@ -15,8 +15,10 @@ class DetailViewController: UIViewController, ImageUpdate {
     /// View that works to hold the scroll view inside the safe area using PureLayout
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     fileprivate let imageView = UIImageView(frame: .zero)
-    fileprivate let roundIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    fileprivate let favoriteButton = DOFavoriteButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44), image: UIImage(named: "heart.png"))
+    fileprivate let roundIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: Constants.roundIconSize.width, height: Constants.roundIconSize.width))
+    fileprivate let favoriteButton = DOFavoriteButton(frame: Constants.defaultButtonRect, image: UIImage(named: "heart.png"))
+    fileprivate var favoriteBarButtonItem = UIBarButtonItem()
+    fileprivate var publisherButton = UIButton(frame: Constants.defaultButtonRect)
     fileprivate let backgroundView = ColorfulBackgroundView(frame: .zero)
 
     var recipeModel = RecipeModel() {
@@ -48,6 +50,7 @@ class DetailViewController: UIViewController, ImageUpdate {
         setupTableView()
         setupImageView()
         setupFavoriteButton()
+        setupPublisherButton()
         setupBackground()
         setupNavigationController()
     }
@@ -61,7 +64,11 @@ class DetailViewController: UIViewController, ImageUpdate {
         tableView.showsVerticalScrollIndicator = false
         tableView.clipsToBounds = false
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewMargins()
+        tableView.autoPinEdge(toSuperviewMargin: .top)
+        tableView.autoPinEdge(toSuperviewMargin: .bottom)
+        tableView.autoPinEdge(toSuperviewEdge: .leading)
+        tableView.autoPinEdge(toSuperviewEdge: .trailing)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.bounds.height * 0.25, right: 0)
     }
 
     fileprivate func setupImageView() {
@@ -87,14 +94,24 @@ class DetailViewController: UIViewController, ImageUpdate {
         //do not use vibrancyContentView to prevent vibrant effect
         imageView.blurView.blurContentView?.addSubview(roundIcon)
         roundIcon.autoCenterInSuperview()
-        roundIcon.autoSetDimensions(to: Constants.roundIconSize)
+        roundIcon.autoSetDimensions(to: Constants.publisherIconSize)
 
         updateImage()
     }
 
+    fileprivate func setupPublisherButton() {
+        imageView.addSubview(publisherButton)
+        publisherButton.imageView?.contentMode = .scaleAspectFit
+        publisherButton.clipsToBounds = true
+        publisherButton.addTarget(self, action: #selector(publisherButtonTouched), for: .touchUpInside)
+        publisherButton.autoSetDimensions(to: Constants.defaultButtonRect.size)
+        publisherButton.autoPinEdge(toSuperviewMargin: .trailing)
+        publisherButton.autoPinEdge(toSuperviewMargin: .top)
+    }
+
     fileprivate func setupFavoriteButton() {
         favoriteButton.addTarget(self, action: #selector(favoriteButtonTouched), for: .touchUpInside)
-        let favoriteBarButtonItem = UIBarButtonItem(customView: favoriteButton)
+        favoriteBarButtonItem = UIBarButtonItem(customView: favoriteButton)
         navigationItem.rightBarButtonItem = favoriteBarButtonItem
     }
 
@@ -105,6 +122,7 @@ class DetailViewController: UIViewController, ImageUpdate {
 
     func setupNavigationController() {
         navigationItem.largeTitleDisplayMode = .automatic
+        navigationItem.setRightBarButton(favoriteBarButtonItem, animated: true)
     }
 
     /// Updates the views that use data from recipeModel
@@ -112,7 +130,7 @@ class DetailViewController: UIViewController, ImageUpdate {
         favoriteButton.isSelected = recipeModel.isFavorite
         navigationItem.title = recipeModel.title
         updateImage()
-        UIView.transition(with: imageView,
+        UIView.transition(with: tableView,
                           duration: Constants.animationDuration,
                           options: .transitionCrossDissolve,
                           animations: {
@@ -120,6 +138,9 @@ class DetailViewController: UIViewController, ImageUpdate {
         },
                           completion: nil
         )
+
+        self.tableView.setContentOffset(CGPoint(x: 0, y: -self.tableView.parallaxHeader.height), animated: true)
+        publisherButton.setBackgroundImage(recipeModel.publisherImage, for: .normal)
     }
 
     /// Requests the image from the image manager and lays out the image spacing
@@ -162,6 +183,18 @@ fileprivate extension DetailViewController {
         }
 
         recipeModel.isFavorite = favoriteButton.isSelected
+    }
+
+    @objc
+    func publisherButtonTouched() {
+        guard let url = recipeModel.sourceURL else { return }
+        goTo(url)
+    }
+
+
+    func goTo(_ url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true, completion: nil)
     }
 }
 
@@ -212,8 +245,7 @@ extension DetailViewController: UITableViewDelegate {
 
         guard let url = section.url(for: indexPath.row, recipeModel: recipeModel) else { return }
 
-        let safariViewController = SFSafariViewController(url: url)
-        present(safariViewController, animated: true, completion: nil)
+        goTo(url)
     }
 }
 

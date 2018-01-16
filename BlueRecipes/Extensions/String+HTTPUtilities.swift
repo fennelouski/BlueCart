@@ -28,7 +28,7 @@ extension String {
         let slashSet = CharacterSet(charactersIn: "/")
         let periodSet = CharacterSet(charactersIn: ".")
         let components = self.components(separatedBy: slashSet)
-        let topLevelDomains = [".com", ".org", ".net", ".gov", ".co"]
+        let topLevelDomains = ["com", "org", "net", "gov", "co"]
         for component in components {
             let subComponents = component.components(separatedBy: periodSet)
             guard let lastComponent = subComponents.last else { return self }
@@ -36,5 +36,7 @@ extension String {
                 return component.cleaned()
             }
         }
+
+        return self
     }
 }

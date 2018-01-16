@@ -35,7 +35,9 @@ enum detailTableViewSection: Int {
             case 0:
                 return recipeModel.publisher
             case 1:
-                return "View at \(recipeModel.publisher)"
+                var domainName: String = recipeModel.publisherURLString ?? recipeModel.sourceURLString ?? recipeModel.publisher
+                domainName = domainName.stripToDomainAndTLD()
+                return "View at \(domainName)"
             default:
                 return ""
             }
@@ -56,7 +58,7 @@ enum detailTableViewSection: Int {
         case .publisher:
             switch row {
             case 0:
-                return recipeModel.publisherURLS
+                return recipeModel.publisherURL
             case 1:
                 return recipeModel.sourceURL
             default:

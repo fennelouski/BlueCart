@@ -20,6 +20,8 @@ class ImageManager {
     /// A weak data source used to store the association between an Image URL and the object
     /// that is expecting that view
     fileprivate static var imageUpdates = NSMapTable<NSURL, NSObject>(keyOptions: .weakMemory, valueOptions: .weakMemory)
+    /// A strong data source used to store callbacks to be executed when an image has successfully been downloaded
+    fileprivate static var imageCallbacks = [URL : [((UIImage) -> Void)]]()
 
     /// The maximum number of times to try downloading an image before moving it to the end of the Queue
     static var maximumNumberOfTries: Int = 1
@@ -38,7 +40,7 @@ class ImageManager {
      - Parameter imageUpdate: The object to be called when the image is available. This overrides the objects that previously requested this image (independent of the order of the image in the queue).
      - Return: An optionally wrapped image. If the image is not immediately available, then
      */
-    static func image(from url: URL, in imageUpdate: (NSObject & ImageUpdate)? = nil) -> UIImage? {
+    static func image(from url: URL, in imageUpdate: (NSObject & ImageUpdate)? = nil, completion: ((UIImage) -> Void)? = nil) -> UIImage? {
         if let image = imageCache.object(forKey: (url as NSURL)) {
             return image
         }
@@ -48,18 +50,38 @@ class ImageManager {
         }
 
         addImageURLToQueue(url, highPriority: false)
-        imageUpdates.setObject(imageUpdate, forKey: (url as NSURL))
+        if imageUpdate != nil {
+            imageUpdates.setObject(imageUpdate, forKey: (url as NSURL))
+        }
+
+        if let callback = completion {
+            var currentCallbacks: [((UIImage) -> Void)] = {
+                if let callbacks = imageCallbacks[url] {
+                    return callbacks
+                }
+
+                return [((UIImage) -> Void)]()
+            }()
+            currentCallbacks.append(callback)
+            imageCallbacks[url] = currentCallbacks
+        }
+
         return nil
     }
 
     fileprivate static func imageRetrieved(image: UIImage, url: URL) {
-        let url = (url as NSURL)
-        imageCache.setObject(image, forKey: url)
-        if let imageUpdate = imageUpdates.object(forKey: url) as? ImageUpdate {
+        let nsurl = (url as NSURL)
+        imageCache.setObject(image, forKey: nsurl)
+        if let imageUpdate = imageUpdates.object(forKey: nsurl) as? ImageUpdate {
             DispatchQueue.main.async() {
                 imageUpdate.updateImage()
             }
-            imageUpdates.removeObject(forKey: url)
+            imageUpdates.removeObject(forKey: nsurl)
+            if let callbacks = imageCallbacks[url] {
+                for callback in callbacks {
+                    callback(image)
+                }
+            }
         }
     }
 
@@ -85,6 +107,15 @@ class ImageManager {
         if numberOfCurrentDownloads < maximumNumberOfConcurrentDownloads {
             downloadNextImage()
         }
+    }
+
+    static func getFavicon(for urlString: String,
+                           completion: ((UIImage) -> Void)? = nil) -> UIImage? {
+        let updatedURLString = urlString.stripToDomainAndTLD()
+        let imageURLString = Constants.clearbitURLString + updatedURLString
+        print("\(imageURLString)")
+        guard let imageURL = URL(string: imageURLString) else { return nil }
+        return image(from: imageURL, completion: completion)
     }
 }
 
@@ -150,7 +181,7 @@ fileprivate extension ImageManager {
     static func save(image: UIImage, url: URL) {
         let name = url.absoluteString
         let fileManager = FileManager.default
-        let imageData = UIImageJPEGRepresentation(image, Constants.jpegCompressionAmount)
+        let imageData = UIImagePNGRepresentation(image)
         let path = getDirectoryPath(for: name)
         fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
         imageRetrieved(image: image, url: url)

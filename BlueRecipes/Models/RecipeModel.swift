@@ -7,7 +7,7 @@
 //
 
 import CoreData
-import Foundation
+import UIKit
 import Unbox
 
 class RecipeModel: NSObject, Unboxable {
@@ -45,8 +45,15 @@ class RecipeModel: NSObject, Unboxable {
     let publisher: String
     /// Base url of the publisher
     let publisherURLString: String?
+    /// Image of the publisher based on the publisher url
+    lazy var publisherImage: UIImage? = {
+        guard let url = publisherURLString ?? sourceURLString else { return nil }
+        return ImageManager.getFavicon(for: url) { image in
+            print("any success? \(image)")
+        }
+    }()
     /// URL of the recipe on Food2Fork.com
-    lazy var publisherURLS: URL? = {
+    lazy var publisherURL: URL? = {
         guard let publisherURLString = publisherURLString else { return nil }
         return URL(string: publisherURLString)
     }()
@@ -265,12 +272,5 @@ fileprivate extension RecipeModel {
     fileprivate var idKey: String {
         return "RecipeModelKey\(id)"
     }
-}
-
-fileprivate extension String {
-    func cleaned() -> String {
-        return self.replacingOccurrences(of: "&#8217;", with: "'").replacingOccurrences(of: "&amp;", with: "&").replacingOccurrences(of: "&#39;", with: "`")
-    }
-
 }
 

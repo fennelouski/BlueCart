@@ -27,8 +27,12 @@ class Constants {
     static let baseSearchURL = URL(string: baseSearchURLString)!
     /// "cell identifier"
     static let cellIdentifier = "cell identifier"
+    /// "https://logo.clearbit.com/"
+    static let clearbitURLString = "https://logo.clearbit.com/"
     /// 6.0
     static let defaultInset: CGFloat = 6
+    /// CGRect(x: 0, y: 0, width: 44, height: 44)
+    static let defaultButtonRect = CGRect(x: 0, y: 0, width: 44, height: 44)
     /// 18
     static let initialLoadCount: Int = 18
     /// 0.5
@@ -43,6 +47,8 @@ class Constants {
     static let parallaxIntensity: CGFloat = 6
     /// 200
     static let preferredMinimumRecipeCount: Int = 200
+    /// CGSize(width: 100, height: 100)
+    static let publisherIconSize = CGSize(width: 100, height: 100)
     /// "recipeIDsKey"
     static let recipeIDsKey = "recipeIDsKey"
     /// CGSize(width: 100, height: 100)
