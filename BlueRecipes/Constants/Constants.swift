@@ -33,6 +33,8 @@ class Constants {
     static let defaultInset: CGFloat = 6
     /// CGRect(x: 0, y: 0, width: 44, height: 44)
     static let defaultButtonRect = CGRect(x: 0, y: 0, width: 44, height: 44)
+    /// 120.0
+    static let headerMinimumHeight: CGFloat = 120
     /// 18
     static let initialLoadCount: Int = 18
     /// 0.5

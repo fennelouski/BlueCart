@@ -23,6 +23,7 @@ class DetailViewController: UIViewController, ImageUpdate {
 
     var recipeModel = RecipeModel() {
         didSet {
+            guard oldValue != recipeModel else { return }
             updateRecipeDetails()
         }
     }
@@ -32,6 +33,11 @@ class DetailViewController: UIViewController, ImageUpdate {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupSubviews()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -78,7 +84,7 @@ class DetailViewController: UIViewController, ImageUpdate {
         imageView.blurView.setup(style: UIBlurEffectStyle.dark, alpha: 1).enable()
 
         tableView.parallaxHeader.view = imageView
-        tableView.parallaxHeader.minimumHeight = 120
+        tableView.parallaxHeader.minimumHeight = Constants.headerMinimumHeight
         tableView.parallaxHeader.mode = .centerFill
         tableView.parallaxHeader.parallaxHeaderDidScrollHandler = { parallaxHeader in
             //update alpha of blur view on top of image view
@@ -139,25 +145,26 @@ class DetailViewController: UIViewController, ImageUpdate {
                           completion: nil
         )
 
-        self.tableView.setContentOffset(CGPoint(x: 0, y: -self.tableView.parallaxHeader.height), animated: true)
+        self.tableView.setContentOffset(CGPoint(x: 0, y:tableView.parallaxHeader.minimumHeight), animated: false)
         publisherButton.setBackgroundImage(recipeModel.publisherImage, for: .normal)
     }
 
     /// Requests the image from the image manager and lays out the image spacing
     func updateImage() {
         if let imageURL = recipeModel.imageURL {
+            let image = ImageManager.image(from: imageURL, in: self)
             if imageView.image == nil {
                 // animating when the image is `nil` reduces the flickering effect from loading
                 UIView.transition(with: imageView,
                                   duration: Constants.animationDuration,
                                   options: .transitionCrossDissolve,
                                   animations: {
-                                    self.imageView.image = ImageManager.image(from: imageURL, in: self)
+                                    self.imageView.image = image
                 },
                                   completion: nil
                 )
             } else {
-                imageView.image = ImageManager.image(from: imageURL)
+                imageView.image = image
             }
         } else {
             imageView.image = nil
@@ -166,6 +173,8 @@ class DetailViewController: UIViewController, ImageUpdate {
         if let image = imageView.image {
             tableView.parallaxHeader.height = min(view.bounds.height * 0.5, image.size.height)
             roundIcon.image = image
+        } else {
+            roundIcon.image = recipeModel.publisherImage
         }
 
         backgroundView.updateColors(from: imageView.image)
