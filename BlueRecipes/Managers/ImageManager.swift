@@ -38,6 +38,7 @@ class ImageManager {
 
      - Parameter url: The remote location for the image. This is also used as the identifier for the image. Images are assumed to be .PNG
      - Parameter imageUpdate: The object to be called when the image is available. This overrides the objects that previously requested this image (independent of the order of the image in the queue).
+     - Parameter completion: An optional block that will be called when the image is downloaded. This does not override other objects that have requested this same image.
      - Return: An optionally wrapped image. If the image is not immediately available, then
      */
     static func image(from url: URL, in imageUpdate: (NSObject & ImageUpdate)? = nil, completion: ((UIImage) -> Void)? = nil) -> UIImage? {

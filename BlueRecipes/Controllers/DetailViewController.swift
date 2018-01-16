@@ -106,7 +106,7 @@ class DetailViewController: UIViewController, ImageUpdate {
         publisherButton.addTarget(self, action: #selector(publisherButtonTouched), for: .touchUpInside)
         publisherButton.autoSetDimensions(to: Constants.defaultButtonRect.size)
         publisherButton.autoPinEdge(toSuperviewMargin: .trailing)
-        publisherButton.autoPinEdge(toSuperviewMargin: .top)
+        publisherButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: Constants.defaultInset)
     }
 
     fileprivate func setupFavoriteButton() {
