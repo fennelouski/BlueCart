@@ -167,11 +167,12 @@ fileprivate extension RecipeDataController {
             case .alphabetically:
                 return recipe1.title < recipe2.title
             case .byIngredients:
-                guard let ingredients1 = recipe1.ingredients,
-                    let ingredients2 = recipe2.ingredients else {
-                        return recipe1.food2ForkURLString > recipe2.food2ForkURLString
+                let ingredients1Count = recipe1.ingredients?.count ?? Int.max
+                let ingredients2Count = recipe2.ingredients?.count ?? Int.max
+                if ingredients1Count == ingredients2Count {
+                    return recipe1.food2ForkURLString > recipe2.food2ForkURLString
                 }
-                return ingredients1.count < ingredients2.count
+                return ingredients1Count < ingredients2Count
             case .byFavorites:
                 if recipe1.isFavorite == recipe2.isFavorite {
                     return recipe1.id < recipe2.id
