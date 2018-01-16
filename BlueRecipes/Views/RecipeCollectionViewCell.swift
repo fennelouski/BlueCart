@@ -35,7 +35,6 @@ class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
     }
 
     fileprivate func updateView(animated: Bool = false) {
-        updateLabels()
         updateFavoriteButton(animated: animated)
         updateImage()
     }
@@ -51,18 +50,19 @@ class RecipeCollectionViewCell: UICollectionViewCell, ImageUpdate {
 
     func updateImage() {
         if let imageURL = recipeModel.imageURL {
+            let image = ImageManager.image(from: imageURL, in: self)
             if imageView.image == nil {
                 // animating when the image is `nil` reduces the flickering effect from loading
                 UIView.transition(with: imageView,
                                   duration: Constants.animationDuration,
                                   options: .transitionCrossDissolve,
                                   animations: {
-                                    self.imageView.image = ImageManager.image(from: imageURL, in: self)
+                                    self.imageView.image = image
                 },
                                   completion: nil
                 )
             } else {
-                imageView.image = ImageManager.image(from: imageURL)
+                self.imageView.image = image
             }
         } else {
             imageView.image = nil
