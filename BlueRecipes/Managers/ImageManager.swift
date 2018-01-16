@@ -105,9 +105,7 @@ class ImageManager {
             imageURLQueue.add(url)
         }
 
-        if numberOfCurrentDownloads < maximumNumberOfConcurrentDownloads {
-            downloadNextImage()
-        }
+        downloadNextImage()
     }
 
     static func getFavicon(for urlString: String,
@@ -126,15 +124,12 @@ extension ImageManager {
     private(set) public static var imageURLQueue = NSMutableOrderedSet()
     /// The current set of images that are downloading
     private(set) public static var currentDownloads = NSMutableOrderedSet()
-    public static var numberOfCurrentDownloads: Int = 0 {
-        didSet {
-            if numberOfCurrentDownloads < maximumNumberOfConcurrentDownloads {
-                downloadNextImage()
-            }
-        }
-    }
 
     fileprivate static func downloadNextImage() {
+        guard currentDownloads.count < maximumNumberOfConcurrentDownloads else {
+            return
+        }
+
         guard let nextURL = imageURLQueue.firstObject as? URL else {
             return
         }
@@ -142,9 +137,7 @@ extension ImageManager {
         downloadImage(url: nextURL)
     }
 
-
     fileprivate static func downloadImage(url: URL, tryCount: Int = 0) {
-        numberOfCurrentDownloads += 1
         currentDownloads.add(url)
         imageURLQueue.remove(url)
         getDataFromUrl(url: url) { data, response, error in
@@ -159,7 +152,7 @@ extension ImageManager {
             }
 
             DispatchQueue.main.async() {
-                numberOfCurrentDownloads -= 1
+                downloadNextImage()
                 currentDownloads.remove(url)
                 guard let image = UIImage(data: data) else {
                     return
