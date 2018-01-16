@@ -44,6 +44,10 @@ extension UIView {
 
         var animationDuration: TimeInterval = 0.1
 
+        func addParallax(intensity: CGFloat) {
+            blur?.addParallax(intensity: intensity)
+        }
+
         /**
          * Blur style. After it is changed all subviews on
          * blurContentView & vibrancyContentView will be deleted.

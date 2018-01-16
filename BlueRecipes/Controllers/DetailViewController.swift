@@ -23,7 +23,6 @@ class DetailViewController: UIViewController, ImageUpdate {
 
     var recipeModel = RecipeModel() {
         didSet {
-            guard oldValue != recipeModel else { return }
             updateRecipeDetails()
         }
     }
@@ -82,7 +81,6 @@ class DetailViewController: UIViewController, ImageUpdate {
 
         //setup bur view
         imageView.blurView.setup(style: UIBlurEffectStyle.dark, alpha: 1).enable()
-
         tableView.parallaxHeader.view = imageView
         tableView.parallaxHeader.minimumHeight = Constants.headerMinimumHeight
         tableView.parallaxHeader.mode = .centerFill
@@ -95,12 +93,16 @@ class DetailViewController: UIViewController, ImageUpdate {
         roundIcon.layer.borderWidth = 2
         roundIcon.layer.cornerRadius = roundIcon.frame.width / 2
         roundIcon.clipsToBounds = true
+        roundIcon.contentMode = .scaleAspectFill
 
         //add round image view to blur content view
         //do not use vibrancyContentView to prevent vibrant effect
         imageView.blurView.blurContentView?.addSubview(roundIcon)
         roundIcon.autoCenterInSuperview()
         roundIcon.autoSetDimensions(to: Constants.publisherIconSize)
+
+        imageView.addParallax(intensity: Constants.parallaxIntensity)
+        imageView.blurView.addParallax(intensity: -Constants.parallaxIntensity)
 
         updateImage()
     }
@@ -112,7 +114,7 @@ class DetailViewController: UIViewController, ImageUpdate {
         publisherButton.addTarget(self, action: #selector(publisherButtonTouched), for: .touchUpInside)
         publisherButton.autoSetDimensions(to: Constants.defaultButtonRect.size)
         publisherButton.autoPinEdge(toSuperviewMargin: .trailing)
-        publisherButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: Constants.defaultInset)
+        publisherButton.autoPinEdge(toSuperviewMargin: .bottom)
     }
 
     fileprivate func setupFavoriteButton() {
@@ -171,7 +173,14 @@ class DetailViewController: UIViewController, ImageUpdate {
         }
 
         if let image = imageView.image {
-            tableView.parallaxHeader.height = min(view.bounds.height * 0.5, image.size.height)
+            let navigationBarMaxY = navigationController?.navigationBar.frame.maxY ?? UIApplication.shared.statusBarFrame.maxY
+            let approximateSafeAreaHeight = view.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - navigationBarMaxY
+            var imageScale: CGFloat = 1
+            while image.size.height / imageScale > approximateSafeAreaHeight {
+                imageScale += 0.5
+            }
+            imageView.contentScaleFactor = imageScale
+            tableView.parallaxHeader.height = min(view.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - navigationBarMaxY, image.size.height)
             roundIcon.image = image
         } else {
             roundIcon.image = recipeModel.publisherImage

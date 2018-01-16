@@ -46,7 +46,7 @@ class Constants {
     /// 5
     static let maxSearchPage: Int = 3
     /// 6.0
-    static let parallaxIntensity: CGFloat = 6
+    static let parallaxIntensity: CGFloat = 10
     /// 200
     static let preferredMinimumRecipeCount: Int = 200
     /// CGSize(width: 100, height: 100)
